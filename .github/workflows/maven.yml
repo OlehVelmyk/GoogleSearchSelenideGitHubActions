@@ -20,7 +20,7 @@
         with:
           distribution: 'oracle' # See 'Supported distributions' for available options
           java-version: '21'
-          cache: maven
+          # cache: maven
           # cache-dependency-path: 'sub-project/pom.xml' # optional
 
       - name: Setup Chrome
