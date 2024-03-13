@@ -23,10 +23,10 @@
         </packages>
     </test>
 
-    <test name="Edge">
-        <parameter name="browser" value="edge"/>
-        <packages>
-            <package name="com.google.tests"></package>
-        </packages>
-    </test>
+<!--    <test name="Edge">-->
+<!--        <parameter name="browser" value="edge"/>-->
+<!--        <packages>-->
+<!--            <package name="com.google.tests"></package>-->
+<!--        </packages>-->
+<!--    </test>-->
 </suite>
