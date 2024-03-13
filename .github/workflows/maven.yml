@@ -20,8 +20,8 @@
         with:
           distribution: 'oracle' # See 'Supported distributions' for available options
           java-version: '21'
-          cache: maven
-          # cache-dependency-path: 'sub-project/pom.xml' # optional
+          cache: 'maven'
+          cache-dependency-path: 'sub-project/pom.xml' # optional
 
       - name: Setup Chrome
       - uses: browser-actions/setup-chrome@latest
@@ -35,7 +35,5 @@
       - uses: browser-actions/setup-edge@latest
       - run:  (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
 
-
-
       - name: Build with Maven
-        run: mvn -B clean test
+        run: mvn -B package --file pom.xml
