@@ -27,6 +27,7 @@ public abstract class BaseTest {
                 "_" + DateProvider.currentTime();
         Configuration.downloadsFolder = "";
         Configuration.browser = browser;
+        Configuration.headless = true; //                            need for github actions CI
     }
 
     @BeforeMethod
