@@ -1,4 +1,4 @@
-  name: Smoke Tests Run
+  name: Smoke Tests Run - Windows
 
   on:
     push:
