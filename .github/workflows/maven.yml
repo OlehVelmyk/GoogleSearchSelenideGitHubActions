@@ -24,15 +24,15 @@
           cache-dependency-path: 'sub-project/pom.xml' # optional
 
       - name: Setup Chrome
-      - uses: browser-actions/setup-chrome@latest
+        uses: browser-actions/setup-chrome@latest
       - run:  chrome --version
 
       - name: Setup Firefox
-      - uses: browser-actions/setup-firefox@latest
+        uses: browser-actions/setup-firefox@latest
       - run:  firefox --version
 
       - name: Setup Edge
-      - uses: browser-actions/setup-edge@latest
+        uses: browser-actions/setup-edge@latest
       - run:  (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
 
       - name: Build with Maven
