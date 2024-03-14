@@ -6,17 +6,17 @@
         chosen-os:
           description: 'Select OS'
           required: true
-          default: 'Windows'
+          default: 'windows-latest'
           type: choice
           options:
-          - ubuntu
-          - windows
-          - macos
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
 
   jobs:
     build:
 
-      runs-on: [self-hosted, "${{ inputs.chosen-os }}"]
+      runs-on: ["${{ inputs.chosen-os }}"]
 
       steps:
       - name: Checkout repository
