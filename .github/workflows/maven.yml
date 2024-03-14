@@ -9,9 +9,9 @@
           default: 'Windows'
           type: choice
           options:
-          - Ubuntu
-          - Windows
-          - MacOS
+          - ubuntu
+          - windows
+          - macos
 
   jobs:
     build:
