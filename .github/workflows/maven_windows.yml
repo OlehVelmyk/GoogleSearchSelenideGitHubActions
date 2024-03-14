@@ -1,15 +1,22 @@
-  name: Smoke Tests Run - Windows
+  name: Smoke Tests Run - Ubuntu
 
   on:
-    push:
-      branches: [ "master" ]
-    pull_request:
-      branches: [ "master" ]
+    workflow_dispatch:
+      inputs:
+        chosen-os:
+          description: 'Select OS'
+          required: true
+          default: 'Windows'
+          type: choice
+          options:
+          - Ubuntu
+          - Windows
+          - MacOS
 
   jobs:
     build:
 
-      runs-on: windows-latest
+      runs-on: [self-hosted, "${{ inputs.chosen-os }}"]
 
       steps:
       - name: Checkout repository
@@ -32,8 +39,9 @@
       - run:  firefox --version
 
       - name: Setup Edge
+        if: "github.event.inputs.chosen-os == 'Windows'"
         uses: browser-actions/setup-edge@latest
-      - run:  (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
-
+      - run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
+      
       - name: Build with Maven
         run: mvn -B package --file pom.xml
