@@ -39,7 +39,7 @@
       - run:  firefox --version
 
       - name: Setup Edge
-        if: "github.event.inputs.chosen-os == 'Windows'"
+        if: "github.event.inputs.chosen-os == 'windows-latest'"
         uses: browser-actions/setup-edge@latest
       - run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
       
