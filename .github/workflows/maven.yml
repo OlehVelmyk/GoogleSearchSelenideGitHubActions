@@ -41,7 +41,10 @@
       - name: Setup Edge
         if: "github.event.inputs.chosen-os == 'windows-latest'"
         uses: browser-actions/setup-edge@latest
-      - run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
+
+      - name: Run Edge  
+        if: "github.event.inputs.chosen-os == 'windows-latest'"
+        run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
       
       - name: Build with Maven
         run: mvn -B package --file pom.xml
