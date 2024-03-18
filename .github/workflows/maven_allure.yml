@@ -37,7 +37,9 @@ jobs:
         run: mvn clean test
 
       - name: Download Allure Command Line
-        run: wget -O allure-2.24.0.tgz https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.24.0/allure-commandline-2.24.0.tgz && tar -zxvf allure-2.24.0.tgz
+        run: |
+          wget -O allure-2.24.0.tgz https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.24.0/allure-commandline-2.24.0.tgz
+          tar -zxvf allure-2.24.0.tgz
 
       - name: Generate Allure Report
         run: ./allure-2.24.0/bin/allure generate target/allure-results --clean -o target/allure-report
