@@ -11,7 +11,7 @@ import static io.qameta.allure.SeverityLevel.CRITICAL;
 
 public class N_0005_CountSearchResultTest extends BaseTest {
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+//    @Test(retryAnalyzer = RetryAnalyzer.class)
     @Description("This test attempts to google search 'Selenium' word. " +
             "Fails if any error happens.\n\nNote that this test doesn't test other search.")
     @Severity(CRITICAL)

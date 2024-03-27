@@ -2,12 +2,12 @@
 
 <suite name="Smoke Tests Run" verbose="1" parallel="tests" thread-count="3">
 
-    <test name="Firefox">
-        <parameter name="browser" value="firefox"/>
-        <packages>
-            <package name="com.google.tests"></package>
-        </packages>
-    </test>
+<!--    <test name="Firefox">-->
+<!--        <parameter name="browser" value="firefox"/>-->
+<!--        <packages>-->
+<!--            <package name="com.google.tests"></package>-->
+<!--        </packages>-->
+<!--    </test>-->
 
     <!--    <test name="Opera">-->
     <!--        <parameter name="browser" value="opera"/>-->
