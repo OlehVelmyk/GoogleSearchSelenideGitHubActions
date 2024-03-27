@@ -1,0 +1,5 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"skipped","Wed Mar 27 12:07:13 GMT 2024","Wed Mar 27 12:07:13 GMT 2024","1","Smoke Tests Run","Chrome","com.google.tests.N_0001_SearchResultsClickingSearchButtonUnderSearchFieldTest","com.google.tests.N_0001_SearchResultsClickingSearchButtonUnderSearchFieldTest","searchResultsClickingSearchButtonUnderSearchField","searchResultsClickingSearchButtonUnderSearchField","This test attempts to google search 'Selenium' word. Fails if any error happens.
+
+Note that this test doesn't test other search."
+"broken","Wed Mar 27 12:07:13 GMT 2024","Wed Mar 27 12:07:13 GMT 2024","2","Smoke Tests Run","Chrome","com.google.tests.N_0001_SearchResultsClickingSearchButtonUnderSearchFieldTest","com.google.tests.N_0001_SearchResultsClickingSearchButtonUnderSearchFieldTest","goToPage","goToPage",""
