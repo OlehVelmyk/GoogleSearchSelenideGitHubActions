@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="3" parallel="tests" name="Failed suite [Smoke Tests Run]" guice-stage="DEVELOPMENT" verbose="0">
+  <test thread-count="3" parallel="tests" name="Edge(failed)" verbose="0">
+    <parameter name="browser" value="edge"/>
+    <classes>
+      <class name="com.google.tests.N_0005_CountSearchResultTest">
+        <methods>
+          <include name="countSearchResult"/>
+          <include name="setUp"/>
+          <include name="goToPage"/>
+        </methods>
+      </class> <!-- com.google.tests.N_0005_CountSearchResultTest -->
+    </classes>
+  </test> <!-- Edge(failed) -->
+  <test thread-count="3" parallel="tests" name="Chrome(failed)" verbose="0">
+    <parameter name="browser" value="chrome"/>
+    <classes>
+      <class name="com.google.tests.N_0005_CountSearchResultTest">
+        <methods>
+          <include name="countSearchResult"/>
+          <include name="setUp"/>
+          <include name="goToPage"/>
+        </methods>
+      </class> <!-- com.google.tests.N_0005_CountSearchResultTest -->
+    </classes>
+  </test> <!-- Chrome(failed) -->
+  <test thread-count="3" parallel="tests" name="Firefox(failed)" verbose="0">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.google.tests.N_0005_CountSearchResultTest">
+        <methods>
+          <include name="countSearchResult"/>
+          <include name="setUp"/>
+          <include name="goToPage"/>
+        </methods>
+      </class> <!-- com.google.tests.N_0005_CountSearchResultTest -->
+    </classes>
+  </test> <!-- Firefox(failed) -->
+</suite> <!-- Failed suite [Smoke Tests Run] -->
