@@ -34,7 +34,7 @@ public abstract class BaseTest {
     protected void goToPage() {
         Allure.step("GO TO " + baseUrl);
         open(baseUrl);
-        getWebDriver().manage().window().maximize(); //              need for github actions CI
+        getWebDriver().manage().window().maximize();
 
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
         Assert.assertEquals(currentUrl, baseUrl);
