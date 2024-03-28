@@ -28,10 +28,7 @@ public abstract class BaseTest {
         Configuration.downloadsFolder = "";
         Configuration.browser = browser;
         Configuration.headless = true; //                            need for github actions CI
-    }
 
-    @BeforeMethod
-    protected void goToPage() {
         Allure.step("GO TO " + baseUrl);
         open(baseUrl);
         getWebDriver().manage().window().maximize();
@@ -39,6 +36,16 @@ public abstract class BaseTest {
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
         Assert.assertEquals(currentUrl, baseUrl);
     }
+
+//    @BeforeMethod
+//    protected void goToPage() {
+//        Allure.step("GO TO " + baseUrl);
+//        open(baseUrl);
+//        getWebDriver().manage().window().maximize();
+//
+//        String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
+//        Assert.assertEquals(currentUrl, baseUrl);
+//    }
 
     protected  void updateTestCaseName(String testName){
         Allure.getLifecycle().updateTestCase(result -> {
