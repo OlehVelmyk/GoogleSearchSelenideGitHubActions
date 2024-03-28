@@ -142,8 +142,8 @@
             <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
-&lt;suite thread-count=&quot;3&quot; parallel=&quot;tests&quot; name=&quot;Smoke Tests Run&quot; guice-stage=&quot;DEVELOPMENT&quot; verbose=&quot;0&quot;&gt;
-  &lt;test thread-count=&quot;3&quot; parallel=&quot;tests&quot; name=&quot;Chrome&quot; verbose=&quot;0&quot;&gt;
+&lt;suite thread-count=&quot;1&quot; parallel=&quot;tests&quot; name=&quot;Smoke Tests Run&quot; guice-stage=&quot;DEVELOPMENT&quot; verbose=&quot;0&quot;&gt;
+  &lt;test thread-count=&quot;1&quot; parallel=&quot;tests&quot; name=&quot;Chrome&quot; verbose=&quot;0&quot;&gt;
     &lt;parameter name=&quot;browser&quot; value=&quot;chrome&quot;/&gt;
     &lt;packages&gt;
       &lt;package name=&quot;com.google.tests&quot;/&gt;
@@ -198,7 +198,7 @@ data.addRows(1);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'searchResultsClickingSearchButtonUnderSearchField')
 data.setCell(0, 2, 'com.google.tests.N_0001_SearchResultsClickingSearchButtonUnderSearchFieldTest')
-data.setCell(0, 3, 2270);
+data.setCell(0, 3, 3132);
 window.suiteTableData['Smoke_Tests_Run']= { tableData: data, tableDiv: 'times-div-Smoke_Tests_Run'}
 return data;
 }
@@ -236,11 +236,11 @@ return data;
               </div> <!-- configuration-class before -->
               <div class="configuration-method before">
                 <span class="method-name">goToPage</span>
-                <span class="method-start">112 ms</span>
+                <span class="method-start">69 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
                 <span class="method-name">searchResultsClickingSearchButtonUnderSearchField</span>
-                <span class="method-start">5842 ms</span>
+                <span class="method-start">5212 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
