@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Smoke Tests Run" verbose="1" parallel="tests" thread-count="3">
+<suite name="Smoke Tests Run" verbose="1" parallel="tests" thread-count="1">
 
 <!--    <test name="Firefox">-->
 <!--        <parameter name="browser" value="firefox"/>-->
