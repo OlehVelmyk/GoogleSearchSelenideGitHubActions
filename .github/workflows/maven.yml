@@ -1,0 +1,105 @@
+name: Tests Run
+
+on:
+  workflow_dispatch:
+    inputs:
+#      groups:
+#        description: 'Select Tests Group'
+#        required: true
+#        default: 'Smoke'
+#        type: choice
+#        options:
+#          - Smoke
+#          - Regression
+#          - E2E
+#          - All
+      browser:
+        description: 'Select Browser'
+        required: true
+        default: 'Google Chrome'
+        type: choice
+        options:
+          - Google Chrome
+          - Firefox
+          - Both
+
+jobs:
+  build:
+
+    #      runs-on: ["${{ inputs.chosen-os }}"]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle' # See 'Supported distributions' for available options
+          java-version: '21'
+          cache: maven
+
+      - name: Setup Chrome
+        if: "github.event.inputs.browser == 'Google Chrome' || github.event.inputs.browser == 'Both'"
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Run Chrome
+        if: "github.event.inputs.browser == 'Google Chrome' || github.event.inputs.browser == 'Both'"
+        run:  chrome --version
+
+      - name: Setup Firefox
+        if: "github.event.inputs.browser == 'Firefox' || github.event.inputs.browser == 'Both'"
+        uses: browser-actions/setup-firefox@latest
+
+      - name: Run Firefox
+        if: "github.event.inputs.browser == 'Firefox' || github.event.inputs.browser == 'Both'"
+        run:  firefox --version
+
+      # - name: Setup Edge
+      #   if: "github.event.inputs.groups == 'windows-latest'"
+      #   uses: browser-actions/setup-edge@latest
+
+      # - name: Run Edge
+      #   if: "github.event.inputs.groups == 'windows-latest'"
+      #   run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
+
+      - name: Build with Maven All tests Chrome
+        if: "github.event.inputs.groups == 'All' && github.event.inputs.browser == 'Google Chrome'"
+        run: mvn clean test -DbrowserName=chrome
+        continue-on-error: true
+
+      - name: Build with Maven All tests Firefox
+        if: "github.event.inputs.groups == 'All' && github.event.inputs.browser == 'Firefox'"
+        run: mvn clean test -DbrowserName=firefox
+        continue-on-error: true
+
+#      - name: Build with Maven All tests Chrome and Firefox
+#        if: "github.event.inputs.groups == 'All' && github.event.inputs.browser == 'Both'"
+#        run: mvn clean test -DbrowserName=chrome -DbrowserNameNew=firefox -DsuiteXmlFile="testng_two_browsers.xml"
+#        continue-on-error: true
+
+      - name: Load test report history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.9
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: reports/allure/allure-results
+          # allure_report: allure-report
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3.9.3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
