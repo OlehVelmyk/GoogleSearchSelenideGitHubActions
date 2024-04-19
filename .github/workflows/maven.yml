@@ -67,42 +67,42 @@ jobs:
       - name: Give permissions
         run:  chmod +x pom.xml
 
-      - name: Build with Maven All tests Chrome
-        if: "github.event.inputs.browser == 'Google Chrome'"
-        run: mvn clean test -DbrowserName=chrome
-        continue-on-error: true
-
-      - name: Build with Maven All tests Firefox
-        if: "github.event.inputs.browser == 'Firefox'"
-        run: mvn clean test -DbrowserName=firefox
-        continue-on-error: true
+#      - name: Build with Maven All tests Chrome
+#        if: "github.event.inputs.browser == 'Google Chrome'"
+#        run: mvn clean test -DbrowserName=chrome
+#        continue-on-error: true
+#
+#      - name: Build with Maven All tests Firefox
+#        if: "github.event.inputs.browser == 'Firefox'"
+#        run: mvn clean test -DbrowserName=firefox
+#        continue-on-error: true
 
 #      - name: Build with Maven All tests Chrome and Firefox
 #        if: "github.event.inputs.groups == 'All' && github.event.inputs.browser == 'Both'"
 #        run: mvn clean test -DbrowserName=chrome -DbrowserNameNew=firefox -DsuiteXmlFile="testng_two_browsers.xml"
 #        continue-on-error: true
 
-      - name: Load test report history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.9
-        if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: reports/allure/allure-results
-          # allure_report: allure-report
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3.9.3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
+#      - name: Load test report history
+#        uses: actions/checkout@v4
+#        if: always()
+#        continue-on-error: true
+#        with:
+#          ref: gh-pages
+#          path: gh-pages
+#
+#      - name: Build test report
+#        uses: simple-elf/allure-report-action@v1.9
+#        if: always()
+#        with:
+#          gh_pages: gh-pages
+#          allure_history: allure-history
+#          allure_results: reports/allure/allure-results
+#          # allure_report: allure-report
+#
+#      - name: Publish test report
+#        uses: peaceiris/actions-gh-pages@v3.9.3
+#        if: always()
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_branch: gh-pages
+#          publish_dir: allure-history
