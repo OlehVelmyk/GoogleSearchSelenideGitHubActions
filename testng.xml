@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Smoke Tests Run" verbose="1" parallel="tests" thread-count="1">
+<suite name="Suite Run" verbose="1" parallel="tests" thread-count="1">
 
 <!--    <test name="Firefox">-->
 <!--        <parameter name="browser" value="firefox"/>-->
@@ -16,7 +16,7 @@
     <!--        </packages>-->
     <!--    </test>-->
 
-    <test name="Chrome">
+    <test name="Test Run">
         <parameter name="browser" value="${browserName}"/>
         <packages>
             <package name="com.google.tests"></package>
