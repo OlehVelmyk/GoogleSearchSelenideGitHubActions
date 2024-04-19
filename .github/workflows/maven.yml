@@ -65,7 +65,7 @@ jobs:
       #   run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
 
       - name: Give permissions
-        run:  chmod +x pom.xml
+        run:  chmod +x selenide
 
       - name: Build with Maven All tests Chrome
         if: "github.event.inputs.browser == 'Google Chrome'"
