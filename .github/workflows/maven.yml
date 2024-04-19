@@ -65,8 +65,8 @@ jobs:
       #   run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
 
       - name: Give permissions
-        # run:  chmod +x
-        run: pwd
+        run:  chmod 777 /home/runner/work/GoogleSearchSelenide/GoogleSearchSelenide
+        # run: pwd
 
       # - name: Build with Maven All tests Chrome
       #   if: "github.event.inputs.browser == 'Google Chrome'"
