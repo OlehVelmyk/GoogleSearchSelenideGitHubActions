@@ -64,8 +64,9 @@ jobs:
       #   if: "github.event.inputs.groups == 'windows-latest'"
       #   run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
 
-      - name: Give permissions
-      - run: pwd
+      # - name: Give permissions
+      # run:  chmod +x
+      # - run: pwd
 
       # - name: Build with Maven All tests Chrome
       #   if: "github.event.inputs.browser == 'Google Chrome'"
