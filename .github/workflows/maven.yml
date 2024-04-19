@@ -65,18 +65,18 @@ jobs:
       #   run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
 
       - name: Give permissions
-        # run:  chmod +x
-      - run: pwd
+        run:  chmod +x com.codeborne.selenide.impl.FileHelper
+        # run: pwd
 
-      # - name: Build with Maven All tests Chrome
-      #   if: "github.event.inputs.browser == 'Google Chrome'"
-      #   run: mvn clean test -DbrowserName=chrome
-      #   continue-on-error: true
+      - name: Build with Maven All tests Chrome
+        if: "github.event.inputs.browser == 'Google Chrome'"
+        run: mvn clean test -DbrowserName=chrome
+        continue-on-error: true
 
-      # - name: Build with Maven All tests Firefox
-      #   if: "github.event.inputs.browser == 'Firefox'"
-      #   run: mvn clean test -DbrowserName=firefox
-      #   continue-on-error: true
+      - name: Build with Maven All tests Firefox
+        if: "github.event.inputs.browser == 'Firefox'"
+        run: mvn clean test -DbrowserName=firefox
+        continue-on-error: true
 
 #      - name: Build with Maven All tests Chrome and Firefox
 #        if: "github.event.inputs.groups == 'All' && github.event.inputs.browser == 'Both'"
