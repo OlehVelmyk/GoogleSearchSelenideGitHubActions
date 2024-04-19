@@ -65,12 +65,12 @@ jobs:
       #   run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
 
       - name: Build with Maven All tests Chrome
-        if: "github.event.inputs.groups == 'All' && github.event.inputs.browser == 'Google Chrome'"
+        if: "github.event.inputs.browser == 'Google Chrome'"
         run: mvn clean test -DbrowserName=chrome
         continue-on-error: true
 
       - name: Build with Maven All tests Firefox
-        if: "github.event.inputs.groups == 'All' && github.event.inputs.browser == 'Firefox'"
+        if: "github.event.inputs.browser == 'Firefox'"
         run: mvn clean test -DbrowserName=firefox
         continue-on-error: true
 
