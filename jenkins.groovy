@@ -22,7 +22,7 @@ node {
 
         try {
             stage("Run tests in $browser_name")
-            runTestWithTag("$browser_name")
+            runTestWithTag("firefox")
         } finally {
             stage ("Allure") {
                 generateAllure()
