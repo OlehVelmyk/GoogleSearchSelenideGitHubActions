@@ -21,8 +21,8 @@ node {
         }
 
         try {
-            stage("Run tests in ${browser_name}")
-            runTestWithTag("${browser_name}")
+            stage("Run tests in $browser_name")
+            runTestWithTag("$browser_name")
         } finally {
             stage ("Allure") {
                 generateAllure()
