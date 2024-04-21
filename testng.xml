@@ -17,7 +17,7 @@
     <!--    </test>-->
 
     <test name="Test Run">
-        <parameter name="browser" value="${browserName}"/>
+        <parameter name="browser" value="chrome"/>
         <packages>
             <package name="com.google.tests"></package>
         </packages>
