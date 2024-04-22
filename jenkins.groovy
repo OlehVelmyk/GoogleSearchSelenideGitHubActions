@@ -77,7 +77,7 @@ node {
 def runTestWithTag(String tag) {
     try {
 //        labelledShell(label: "Run ${tag}", script: "mvn clean test -DbrowserName=${tag}")
-        sh script: "echo foo - ${tag}", label: "my step"
+        sh label: "my step", script: "ls -al"
     } catch (err) {
         echo "Some failed tests"
         throw ("${err}")
