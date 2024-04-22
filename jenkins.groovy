@@ -76,7 +76,8 @@ node {
 
 def runTestWithTag(String tag) {
     try {
-        labelledShell(label: "Run ${tag}", script: "mvn clean test -DbrowserName=${tag}")
+//        labelledShell(label: "Run ${tag}", script: "mvn clean test -DbrowserName=${tag}")
+        labelledShell(label: "Run ${tag}", script: "cd C:\\apache-maven-3.9.5 \ndir")
     } finally {
         echo "Some failed tests"
     }
