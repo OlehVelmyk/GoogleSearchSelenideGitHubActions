@@ -78,7 +78,7 @@ def runTestWithTag(String tag) {
     try {
         labelledPowerShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${tag}")
     } catch (err) {
-        echo "Some failed tests"
+        echo "Some failed tests ${tag}"
         throw ("${err}")
     }
 }
