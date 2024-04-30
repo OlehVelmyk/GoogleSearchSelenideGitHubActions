@@ -20,6 +20,10 @@ node {
             }
         }
 
+        tools {
+            maven 'Maven 3.9.6'
+            jdk 'jdk8'
+        }
 
             try {
                 stage("Run tests in ${browser_name}") {
