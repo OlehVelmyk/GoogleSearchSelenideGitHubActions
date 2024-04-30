@@ -17,19 +17,18 @@ node {
                 }
             } else {
                 echo "Current branch is master"
-//                getProject("$base_git_url", "$branch_cutted")
             }
         }
 
 
-//            try {
-//                stage("Run tests in ${browser_name}") {
-//                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name} pom.xml")
-//                }
-//            } catch (err) {
-//                    echo "Some failed tests ${browser_name}"
-//                    throw ("${err}")
-//                }
+            try {
+                stage("Run tests in ${browser_name}") {
+                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
+                }
+            } catch (err) {
+                    echo "Some failed tests ${browser_name}"
+                    throw ("${err}")
+                }
 //            finally {
 //                   stage ("Allure") {
 //                       generateAllure()
