@@ -20,16 +20,20 @@ node {
             }
         }
 
+        stage("Run tests in ${browser_name}") {
+            try {
+                    labelledPowerShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${browser_name}")
 
-        try {
-            stage("Run tests in ${browser_name}") {
-                runTestWithTag("${browser_name}")
+                } catch (err) {
+                    echo "Some failed tests ${browser_name}"
+                    throw ("${err}")
+                }
             }
-        } finally {
+
             stage ("Allure") {
                 generateAllure()
             }
-        }
+
 
 //        try {
 //            parallel getTestStages(["apiTests", "uiTests"])
