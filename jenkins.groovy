@@ -23,7 +23,9 @@ node {
 
             try {
                 stage("Run tests in ${browser_name}") {
-                    labelledShell(label: 'Run ${browser_name}', script: "mvn clean test -DbrowserName=${browser_name}")
+                    labelledShell(label: 'Run ${browser_name}',
+                            script: " C:\\ProgramData\\Jenkins\\.jenkins\\tools\\hudson.tasks.Maven_MavenInstallation\\Maven_3.9.6 " +
+                                    "mvn clean test -DbrowserName=${browser_name}")
                 }
 
                 } catch (err) {
