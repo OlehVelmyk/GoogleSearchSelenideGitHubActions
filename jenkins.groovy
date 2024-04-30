@@ -34,7 +34,6 @@ node {
                        generateAllure()
                    }
                 }
-            }
 
 //        try {
 //            parallel getTestStages(["apiTests", "uiTests"])
