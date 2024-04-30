@@ -23,7 +23,7 @@ node {
 
             try {
                 stage("Run tests in ${browser_name}") {
-                    labelledPowerShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${browser_name}")
+                    labelledShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${browser_name}")
                 }
 
                 } catch (err) {
