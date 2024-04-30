@@ -20,8 +20,8 @@ node {
             }
         }
 
+        stage("Run tests in ${browser_name}")
         try {
-            stage("Run tests in ${browser_name}")
             runTestWithTag("${browser_name}")
         } finally {
             stage ("Allure") {
@@ -76,8 +76,7 @@ node {
 
 def runTestWithTag(String tag) {
     try {
-//        labelledShell(label: "Run ${tag}", script: "mvn clean test -DbrowserName=${tag}")
-        sh(label: "my step", script: "cd C:\\apache-maven-3.9.5")
+        labelledPowerShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${tag}")
     } catch (err) {
         echo "Some failed tests"
         throw ("${err}")
@@ -103,3 +102,5 @@ def generateAllure() {
             results          : [[path: 'reports/allure/allure-results']]
     ])
 }
+
+
