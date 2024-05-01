@@ -25,19 +25,19 @@ node {
 //            jdk 'jdk8'
 //        }
 
-        stage("Build Maven") {
-            tool name: "Maven 3.9.6", type: "maven"
-            bat "mvn clean deploy"
-        }
+//        stage("Build Maven") {
+//            tool name: "Maven 3.9.6", type: "maven"
+//            bat "mvn clean deploy"
+//        }
 
-//            try {
-//                stage("Run tests in ${browser_name}") {
-//                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
-//                }
-//            } catch (err) {
-//                    echo "Some failed tests ${browser_name}"
-//                    throw ("${err}")
-//                }
+            try {
+                stage("Run tests in ${browser_name}") {
+                    labelledShell(label: "Run ${browser_name}", script: " bat mvn clean test -DbrowserName=${browser_name}")
+                }
+            } catch (err) {
+                    echo "Some failed tests ${browser_name}"
+                    throw ("${err}")
+                }
 //            finally {
 //                   stage ("Allure") {
 //                       generateAllure()
