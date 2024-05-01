@@ -16,36 +16,26 @@ node {
                     throw ("${err}")
                 }
             } else {
-                echo "Current branch is master"
+//                echo "Current branch is master"
                 git "$base_git_url"
             }
         }
 
-//        tools {
-//            maven 'Maven 3.9.6'
-//            jdk 'jdk8'
-//        }
-
-//        stage("Build Maven") {
-//            tool name: "Maven 3.9.6", type: "maven"
-//            bat "mvn clean deploy"
-//        }
-
             try {
                 stage("Run tests in ${browser_name}") {
-//                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
+                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
 
-                    bat "mvn clean test -DbrowserName=${browser_name}"
+//                    bat "mvn clean test -DbrowserName=${browser_name}"
                 }
             } catch (err) {
                     echo "Some failed tests ${browser_name}"
                     throw ("${err}")
                 }
-//            finally {
-//                   stage ("Allure") {
-//                       generateAllure()
-//                   }
-//                }
+            finally {
+                   stage ("Allure") {
+                       generateAllure()
+                   }
+                }
 
 //        try {
 //            parallel getTestStages(["apiTests", "uiTests"])
