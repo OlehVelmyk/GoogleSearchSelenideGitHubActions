@@ -17,22 +17,25 @@ node {
                 }
             } else {
                 echo "Current branch is master"
+                git "$base_git_url"
             }
         }
 
             try {
                 stage("Run tests in ${browser_name}") {
-                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
+//                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
+
+                    bat "mvn clean test -DbrowserName=${browser_name}"
                 }
             } catch (err) {
                     echo "Some failed tests ${browser_name}"
                     throw ("${err}")
                 }
-//            finally {
-//                   stage ("Allure") {
-//                       generateAllure()
-//                   }
-//                }
+            finally {
+                   stage ("Allure") {
+                       generateAllure()
+                   }
+                }
 
 //        try {
 //            parallel getTestStages(["apiTests", "uiTests"])
