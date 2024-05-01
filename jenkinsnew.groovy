@@ -20,14 +20,24 @@ node {
             }
         }
 
-            try {
-                stage("Run tests in ${browser_name}") {
-                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
-                }
-            } catch (err) {
-                    echo "Some failed tests ${browser_name}"
-                    throw ("${err}")
-                }
+//        tools {
+//            maven 'Maven 3.9.6'
+//            jdk 'jdk8'
+//        }
+
+        stage("Build Maven") {
+            tool name: 'Maven3.9.6', type: 'maven'
+            sh "mvn clean deploy"
+        }
+
+//            try {
+//                stage("Run tests in ${browser_name}") {
+//                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
+//                }
+//            } catch (err) {
+//                    echo "Some failed tests ${browser_name}"
+//                    throw ("${err}")
+//                }
 //            finally {
 //                   stage ("Allure") {
 //                       generateAllure()
