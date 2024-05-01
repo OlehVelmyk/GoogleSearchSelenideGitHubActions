@@ -32,7 +32,9 @@ node {
 
             try {
                 stage("Run tests in ${browser_name}") {
-                    labelledShell(label: "Run ${browser_name}", script: " bat mvn clean test -DbrowserName=${browser_name}")
+//                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
+                    label: "Run ${browser_name}"
+                    bat "mvn clean test -DbrowserName=${browser_name}"
                 }
             } catch (err) {
                     echo "Some failed tests ${browser_name}"
