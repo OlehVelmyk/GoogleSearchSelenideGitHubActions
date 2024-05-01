@@ -17,7 +17,7 @@ node {
                 }
             } else {
                 echo "Current branch is master"
-                git "https://github.com/OlehVelmyk/GoogleSearchSelenide.git"
+                git "$base_git_url"
             }
         }
 
