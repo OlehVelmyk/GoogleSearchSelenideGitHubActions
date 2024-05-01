@@ -17,6 +17,7 @@ node {
                 }
             } else {
                 echo "Current branch is master"
+                git "https://github.com/OlehVelmyk/GoogleSearchSelenide.git"
             }
         }
 
@@ -33,7 +34,7 @@ node {
             try {
                 stage("Run tests in ${browser_name}") {
 //                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
-                    echo "Run ${browser_name}"
+
                     bat "mvn clean test -DbrowserName=${browser_name}"
                 }
             } catch (err) {
