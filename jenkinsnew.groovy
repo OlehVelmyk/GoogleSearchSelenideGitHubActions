@@ -33,7 +33,7 @@ node {
             try {
                 stage("Run tests in ${browser_name}") {
 //                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
-                    tool name: "Run ${browser_name}"
+                    label name: "Run ${browser_name}"
                     bat "mvn clean test -DbrowserName=${browser_name}"
                 }
             } catch (err) {
