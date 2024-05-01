@@ -16,7 +16,7 @@ node {
                     throw ("${err}")
                 }
             } else {
-//                echo "Current branch is master"
+                echo "Current branch is master"
                 git "$base_git_url"
             }
         }
