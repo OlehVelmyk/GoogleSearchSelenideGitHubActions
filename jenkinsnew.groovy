@@ -26,7 +26,7 @@ node {
 //        }
 
         stage("Build Maven") {
-            tool name: 'Maven3.9.6', type: 'maven'
+            tool name: "Maven 3.9.6", type: "maven"
             sh "mvn clean deploy"
         }
 
