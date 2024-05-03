@@ -75,23 +75,16 @@ node {
 //    return stages
 //}
 
-//def runTestWithTag(String tag) {
-//    try {
-//        labelledShell(label: "Run ${tag}", script: "chmod +x gradlew \n./gradlew -x test ${tag}")
-//    } finally {
-//        echo "some failed tests"
-//    }
-//}
-
 def runTestWithTag(String tag) {
     try {
         if (isUnix()) {
-            labelledPowerShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${tag}")
+            labelledShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${tag}")
         } else {
             bat "mvn clean test -DbrowserName=${tag}"
         }
-    } finally {
+    } catch(err) {
         echo "some failed tests"
+        throw ("${err}")
     }
 }
 
