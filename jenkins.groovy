@@ -25,7 +25,8 @@ node {
                 stage("Run tests in ${browser_name}") {
 //                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
 
-                    bat "mvn clean test -DbrowserName=${browser_name}"
+//                    bat "mvn clean test -DbrowserName=${browser_name}"
+                    runTestWithTag(${browser_name})
                 }
             } catch (err) {
                     echo "Some failed tests ${browser_name}"
@@ -82,14 +83,17 @@ node {
 //    }
 //}
 
-//def runTestWithTag(String tag) {
-//    try {
-//        labelledPowerShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${tag}")
-//    } catch (err) {
-//        echo "Some failed tests ${tag}"
-//        throw ("${err}")
-//    }
-//}
+def runTestWithTag(String tag) {
+    try {
+        if (isUnix()) {
+            labelledPowerShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${tag}")
+        } else {
+            bat "mvn clean test -DbrowserName=${tag}"
+        }
+    } finally {
+        echo "some failed tests"
+    }
+}
 
 def getProject(String repo, String branch) {
     cleanWs()
