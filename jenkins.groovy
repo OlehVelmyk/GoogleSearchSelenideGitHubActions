@@ -23,9 +23,6 @@ node {
 
             try {
                 stage("Run tests in ${browser_name}") {
-//                    labelledShell(label: "Run ${browser_name}", script: "mvn clean test -DbrowserName=${browser_name}")
-
-//                    bat "mvn clean test -DbrowserName=${browser_name}"
                     runTestWithTag(browser_name)
                 }
             } catch (err) {
@@ -78,8 +75,10 @@ node {
 def runTestWithTag(String tag) {
     try {
         if (isUnix()) {
+            echo "Current OS - Unix"
             labelledShell(label: 'Run ${tag}', script: "mvn clean test -DbrowserName=${tag}")
         } else {
+            echo "Current OS - Windows"
             bat "mvn clean test -DbrowserName=${tag}"
         }
     } catch(err) {
