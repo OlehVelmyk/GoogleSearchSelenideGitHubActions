@@ -116,7 +116,7 @@ def sendSlackNotification() {
               channel: 'test_notifications',
               color: '#00ff00',
               message: 'Jenkins <GoogleSearchSelenide_Pipeline> project. Tests <${branch_cutted}_${browser_name}' +
-                       'completed!!! Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/22/allure/',
+                       'completed!!! Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/23/allure/',
               tokenCredentialId: 'slack-token'
 }
 
