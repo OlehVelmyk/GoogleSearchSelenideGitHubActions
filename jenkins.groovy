@@ -33,6 +33,9 @@ node {
                    stage ("Allure") {
                        generateAllure()
                    }
+                   stage ("Slack") {
+                       sendSlackNotification()
+                   }
                 }
 
 //        try {
@@ -105,6 +108,14 @@ def generateAllure() {
             reportBuildPolicy: 'ALWAYS',
             results          : [[path: 'reports/allure/allure-results']]
     ])
+}
+
+def sendSlackNotification() {
+    slackSend botUser: true,
+              channel: 'test_notifications',
+              color: '#00ff00',
+              message: 'Testing Jekins with Slack',
+              tokenCredentialId: 'slack-token'
 }
 
 
