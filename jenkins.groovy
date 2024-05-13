@@ -17,7 +17,7 @@ node {
                 }
             } else {
                 echo "Current branch is master" +
-                        " currentBuild.number"
+                        " $currentBuild.number"
                 git "$base_git_url"
             }
         }
@@ -115,8 +115,8 @@ def sendSlackNotification() {
     slackSend botUser: true,
               channel: 'test_notifications',
               color: '#00ff00',
-              message: 'Jenkins <GoogleSearchSelenide_Pipeline> project. Tests <${branch_cutted}_${browser_name}' +
-                       'completed!!! Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/23/allure/',
+              message: "Jenkins <GoogleSearchSelenide_Pipeline> project. Tests $branch_cutted_$browser_name" +
+                       " completed!!! Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/24/allure/",
               tokenCredentialId: 'slack-token'
 }
 
