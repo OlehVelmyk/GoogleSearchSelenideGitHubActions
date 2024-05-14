@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
 public class GoogleMainPage extends BasePage {
-    private final SelenideElement searchField  = $(By.name("q"));
+    private final SelenideElement searchField  = $(By.name("qqq"));
     private final SelenideElement searchButtonUnderSearchField = $(By.cssSelector("center:nth-child(1) > input:nth-child(1)"));
     private final SelenideElement searchButtonInDropDownMenu = $(By.cssSelector("center:nth-child(2) > input:nth-child(1)"));
     private final SelenideElement emailLink = $(By.linkText("Gmail"));
