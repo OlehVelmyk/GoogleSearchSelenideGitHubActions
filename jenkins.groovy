@@ -112,22 +112,23 @@ def generateAllure() {
 }
 
 def sendSlackNotification() {
-    slackSend botUser: true,
-              channel: 'test_notifications',
-              tokenCredentialId: 'slack-token'
-              if (currentBuild.result == "SUCCESS") {
-                  color: '#36a64f'
+    if (currentBuild.result == "SUCCESS") {
+        slackSend botUser: true,
+                  channel: 'test_notifications',
+                  color: '#36a64f',
                   message: ":white_check_mark: <$env.JOB_BASE_NAME> completed!!! $currentBuild.result \r\n" +
-                          "Branch: $task_branch. Browser: $browser_name. \r\n" +
-                          "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
-              } else {
-                  color: '#ff0000'
+                           "Branch: $task_branch. Browser: $browser_name. \r\n" +
+                           "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/",
+                  tokenCredentialId: 'slack-token'
+    } else {
+        slackSend botUser: true,
+                  channel: 'test_notifications',
+                  color: '#ff0000',
                   message: ":rage: <$env.JOB_BASE_NAME> completed!!! $currentBuild.result \r\n" +
-                          "Branch: $task_branch. Browser: $browser_name. \r\n" +
-                          "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
-              }
-
-
+                           "Branch: $task_branch. Browser: $browser_name. \r\n" +
+                           "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/",
+                 tokenCredentialId: 'slack-token'
+    }
 }
 
 
