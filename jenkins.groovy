@@ -114,6 +114,7 @@ def generateAllure() {
 def sendSlackNotification() {
     slackSend botUser: true,
               channel: 'test_notifications',
+              iconEmoji: ':jenkins:',
               color: '#00ff00',
               message: "Jenkins <$env.JOB_BASE_NAME> completed!!! $currentBuild.result \r\n" +
                        "Branch: $task_branch. Browser: $browser_name. \r\n" +
