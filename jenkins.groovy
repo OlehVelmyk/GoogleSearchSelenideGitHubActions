@@ -116,13 +116,6 @@ def generateSlackNotification() {
         sendSlackNotification("#36a64f", ":white_check_mark:")
     } else {
         sendSlackNotification("#ff0000", ":rage:")
-//        slackSend botUser: true,
-//                  channel: 'test_notifications',
-//                  color: '#ff0000',
-//                  message: ":rage: <$env.JOB_BASE_NAME> completed!!! $currentBuild.result \r\n" +
-//                           "Branch: $task_branch. Browser: $browser_name. \r\n" +
-//                           "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/",
-//                 tokenCredentialId: 'slack-token'
     }
 }
 
