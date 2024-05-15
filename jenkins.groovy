@@ -34,7 +34,7 @@ node {
                        generateAllure()
                    }
                    stage ("Slack") {
-                       sendSlackNotification()
+                       generateSlackNotification()
                    }
                 }
 
@@ -111,24 +111,29 @@ def generateAllure() {
     ])
 }
 
-def sendSlackNotification() {
+def generateSlackNotification() {
     if (currentBuild.result == "SUCCESS") {
-        slackSend botUser: true,
-                  channel: 'test_notifications',
-                  color: '#36a64f',
-                  message: ":white_check_mark: <$env.JOB_BASE_NAME> completed!!! $currentBuild.result \r\n" +
-                           "Branch: $task_branch. Browser: $browser_name. \r\n" +
-                           "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/",
-                  tokenCredentialId: 'slack-token'
+        sendSlackNotification("#36a64f", ":white_check_mark:")
     } else {
-        slackSend botUser: true,
-                  channel: 'test_notifications',
-                  color: '#ff0000',
-                  message: ":rage: <$env.JOB_BASE_NAME> completed!!! $currentBuild.result \r\n" +
-                           "Branch: $task_branch. Browser: $browser_name. \r\n" +
-                           "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/",
-                 tokenCredentialId: 'slack-token'
+        sendSlackNotification("#ff0000", ":rage:")
+//        slackSend botUser: true,
+//                  channel: 'test_notifications',
+//                  color: '#ff0000',
+//                  message: ":rage: <$env.JOB_BASE_NAME> completed!!! $currentBuild.result \r\n" +
+//                           "Branch: $task_branch. Browser: $browser_name. \r\n" +
+//                           "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/",
+//                 tokenCredentialId: 'slack-token'
     }
+}
+
+def sendSlackNotification(String color, String slackEmoji) {
+    slackSend botUser: true,
+              channel: 'test_notifications',
+              color: color,
+              message: "${slackEmoji} <$env.JOB_BASE_NAME> completed!!! $currentBuild.result \r\n" +
+                       "Branch: $task_branch. Browser: $browser_name. \r\n" +
+                       "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/",
+              tokenCredentialId: 'slack-token'
 }
 
 
