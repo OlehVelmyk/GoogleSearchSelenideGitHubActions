@@ -144,16 +144,16 @@ def generateTelegramNotification() {
 def sendTelegramNotification(String slackEmoji) {
     if (isUnix()) {
         sh """
-        curl --location 'https://api.telegram.org/bot7133412680:AAEkXQVp9t4_eiHQ6lwfdcz6IyA2JQ1UMJg/sendMessage' \
+        curl --location 'https://api.telegram.org/bot/sendMessage' \
              --header 'Content-Type: application/json' \
-             --data '{"chat_id": "186345193", 
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name. \\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+             --data '{"chat_id": "", 
+                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     } else {
         bat """
-        curl --location 'https://api.telegram.org/bot7133412680:AAEkXQVp9t4_eiHQ6lwfdcz6IyA2JQ1UMJg/sendMessage' \
+        curl --location 'https://api.telegram.org/bot/sendMessage' \
              --header 'Content-Type: application/json' \
-             --data '{"chat_id": "186345193", 
+             --data '{"chat_id": "", 
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     }
