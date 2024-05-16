@@ -36,6 +36,9 @@ node {
                    stage ("Slack") {
                        generateSlackNotification()
                    }
+                   stage ("Telegram") {
+                       generateTelegramNotification()
+                   }
                 }
 
 
@@ -130,3 +133,32 @@ def sendSlackNotification(String color, String slackEmoji) {
 }
 
 
+def generateTelegramNotification() {
+    if (currentBuild.result == "SUCCESS") {
+        sendTelegramNotification("✅")
+    } else {
+        sendTelegramNotification("😡")
+    }
+}
+
+def sendTelegramNotification(String slackEmoji) {
+    if (isUnix()) {
+        sh """
+        curl --location 'https://api.telegram.org/bot${credentials('telegram-credentials')}/sendMessage' \
+             --header 'Content-Type: application/json' \
+             --data '{"chat_id": "${credentials('telegram_chatId')}", 
+                      "text": "${slackEmoji} <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\n
+                      Branch: $task_branch. Browser: $browser_name.\\n
+                      Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+           """
+    } else {
+        bat """
+        curl --location 'https://api.telegram.org/bot${credentials('telegram-credentials')}/sendMessage' \
+             --header 'Content-Type: application/json' \
+             --data '{"chat_id": "${credentials('telegram_chatId')}", 
+                      "text": "${slackEmoji} <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\n
+                      Branch: $task_branch. Browser: $browser_name.\\n
+                      Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+           """
+    }
+}
