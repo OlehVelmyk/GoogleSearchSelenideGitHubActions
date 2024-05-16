@@ -147,8 +147,8 @@ def sendTelegramNotification(String slackEmoji) {
         curl --location 'https://api.telegram.org/bot${credentials('telegram-token')}/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "${credentials('telegram_chatId')}", 
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\n
-                      Branch: $task_branch. Browser: $browser_name.\\n
+                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result \\n
+                      Branch: $task_branch. Browser: $browser_name. \\n
                       Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     } else {
@@ -156,8 +156,8 @@ def sendTelegramNotification(String slackEmoji) {
         curl --location 'https://api.telegram.org/bot${credentials('telegram-credentials')}/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "${credentials('telegram_chatId')}", 
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\n
-                      Branch: $task_branch. Browser: $browser_name.\\n
+                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result \\n
+                      Branch: $task_branch. Browser: $browser_name. \\n
                       Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     }
