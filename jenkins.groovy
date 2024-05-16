@@ -144,7 +144,7 @@ def generateTelegramNotification() {
 def sendTelegramNotification(String slackEmoji) {
     if (isUnix()) {
         sh """
-        curl --location 'https://api.telegram.org/bot${credentials('telegram-credentials')}/sendMessage' \
+        curl --location 'https://api.telegram.org/bot${credentials('telegram-token')}/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "${credentials('telegram_chatId')}", 
                       "text": "${slackEmoji} <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\n
