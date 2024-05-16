@@ -123,7 +123,7 @@ def sendSlackNotification(String color, String slackEmoji) {
     slackSend botUser: true,
               channel: 'test_notifications',
               color: color,
-              message: "${slackEmoji} '$env.JOB_BASE_NAME' completed!!! $currentBuild.result \r\n" +
+              message: "${slackEmoji} <<$env.JOB_BASE_NAME>> completed!!! $currentBuild.result \r\n" +
                        "Branch: $task_branch. Browser: $browser_name. \r\n" +
                        "Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/",
               tokenCredentialId: 'slack-token'
