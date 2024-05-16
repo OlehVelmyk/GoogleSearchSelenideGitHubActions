@@ -153,7 +153,7 @@ def sendTelegramNotification(String slackEmoji) {
            """
     } else {
         bat """
-        curl --location 'https://api.telegram.org/bot${credentials('telegram-credentials')}/sendMessage' \
+        curl --location 'https://api.telegram.org/bot${credentials('telegram-token')}/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "${credentials('telegram_chatId')}", 
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result \\n
