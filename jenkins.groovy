@@ -147,18 +147,14 @@ def sendTelegramNotification(String slackEmoji) {
         curl --location 'https://api.telegram.org/bot7133412680:AAEkXQVp9t4_eiHQ6lwfdcz6IyA2JQ1UMJg/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "186345193", 
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result \\n
-                      Branch: $task_branch. Browser: $browser_name. \\n
-                      Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name. \\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     } else {
         bat """
         curl --location 'https://api.telegram.org/bot7133412680:AAEkXQVp9t4_eiHQ6lwfdcz6IyA2JQ1UMJg/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "186345193", 
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result \\n
-                      Branch: $task_branch. Browser: $browser_name. \\n
-                      Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     }
 }
