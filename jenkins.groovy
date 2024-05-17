@@ -160,11 +160,11 @@ def sendTelegramNotification(String slackEmoji) {
 //                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
 //           """
         bat """
-        curl --location 'https://api.telegram.org/bot${credentials('telegram-token')}/sendMessage' \
+        curl --location 'https://api.telegram.org/bot$tg-token}/sendMessage' \
              --header 'Content-Type: application/json' \
              --data @- << EOF
         {
-              "chat_id": "${credentials('telegram_chatId')}",
+              "chat_id": "$tg_chatId",
               "text": " <<$env.JOB_BASE_NAME>> completed !!! PASSED\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
         }
         EOF
