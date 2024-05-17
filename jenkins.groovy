@@ -12,8 +12,7 @@ node {
         chat_id = credentials('telegram_chatId')
     }
 
-    withEnv(["branch=${branch_cutted}", "base_url=${base_git_url}", "tg_token = credentials('telegram-token')",
-             "chat_id = credentials('telegram_chatId')"]) {
+    withEnv(["branch=${branch_cutted}", "base_url=${base_git_url}"]) {
         stage("Checkout Branch") {
             if (!"$branch_cutted".contains("master")) {
                 try {
