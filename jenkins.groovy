@@ -147,21 +147,27 @@ def generateTelegramNotification() {
 def sendTelegramNotification(String slackEmoji) {
     if (isUnix()) {
         sh """
-        curl --location 'https://api.telegram.org/bot${env.telegram-token}/sendMessage' \
+        curl --location 'https://api.telegram.org/bot$tg-token/sendMessage' \
              --header 'Content-Type: application/json' \
-             --data '{"chat_id": "${chat_id}", 
+             --data '{"chat_id": "$tg_chatId", 
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     } else {
+//        bat """
+//        curl --location 'https://api.telegram.org/bot$tg_token/sendMessage' \
+//             --header 'Content-Type: application/json' \
+//             --data '{"chat_id": "$tg_chatId",
+//                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+//           """
         bat """
-        curl --location 'https://api.telegram.org/bot$tg_token/sendMessage' \
+        curl --location 'https://api.telegram.org/bot${credentials('telegram-token')}/sendMessage' \
              --header 'Content-Type: application/json' \
-             --data '{"chat_id": "$tg_chatId",
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
-           """
-//        withCredentials([string(credentialsId: 'telegram-token', variable: 'telegram_token')]) {
-//            // After that is going your pipeline steps that require the secret text credential, for instance:
-//            echo "VARIABLE=$tg_token"
-//            echo "VARIABLE=$tg_chatId"
+             --data @- << EOF
+        {
+              "chat_id": "${credentials('telegram_chatId')}",
+              "text": " <<$env.JOB_BASE_NAME>> completed !!! PASSED\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
+        }
+        EOF
+        """
         }
     }
