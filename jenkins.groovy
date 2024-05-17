@@ -167,6 +167,6 @@ def sendTelegramNotification(String slackEmoji) {
               "chat_id": "$tg_chatId",
               "text": " <<$env.JOB_BASE_NAME>> completed !!! PASSED\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
         }'
-        """
+            """
         }
     }
