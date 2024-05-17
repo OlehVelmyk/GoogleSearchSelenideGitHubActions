@@ -137,9 +137,9 @@ def sendSlackNotification(String color, String slackEmoji) {
 
 def generateTelegramNotification() {
     if (currentBuild.result == "SUCCESS") {
-        sendTelegramNotification("")
+        sendTelegramNotification("✅")
     } else {
-        sendTelegramNotification("")
+        sendTelegramNotification("😡")
     }
 }
 
@@ -152,24 +152,18 @@ def sendTelegramNotification(String slackEmoji) {
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     } else {
-//        bat """
-//        curl --location 'https://api.telegram.org/bot$tg_token/sendMessage' \
-//             --header 'Content-Type: application/json' \
-//             --data '{"chat_id": "$tg_chatId",
-//                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
-//           """
         withCredentials([
                 string(credentialsId: 'telegram_chatId', variable: 'TELEGRAM_CHAT_ID'),
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
             // Write the batch file content with proper escaping and without direct interpolation
             def batchFileContent = """
-                        @echo off
-                        
+                        @echo off 
+                                               
              curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
              --header "Content-Type: application/json" ^
-             --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"GoogleSearchSelenide_Pipeline completed !!! PASSED\\nBranch: master. Browser: chrome.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/73/allure/\\"}"
-
+             --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\slackEmoji "GoogleSearchSelenide_Pipeline completed !!! PASSED\\nBranch: master. Browser: chrome.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/73/allure/\\"}"
+             
                         """.stripIndent()
 
             // Write the batch file to the workspace
