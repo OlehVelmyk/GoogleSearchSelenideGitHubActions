@@ -162,22 +162,14 @@ def sendTelegramNotification(String slackEmoji) {
                 string(credentialsId: 'telegram_chatId', variable: 'TELEGRAM_CHAT_ID'),
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
-            // Construct the message
-            def message = "$env.JOB_BASE_NAME completed !!! PASSED\nBranch: $task_branch. Browser: $browser_name.\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
-
-            echo "Message: $message"
-
-            // Prepare the JSON payload using JsonOutput to escape special characters
-            def jsonPayload = groovy.json.JsonOutput.toJson([chat_id: TELEGRAM_CHAT_ID, text: message])
-
-            echo "jsonPayload: $jsonPayload"
-
             // Write the batch file content with proper escaping and without direct interpolation
             def batchFileContent = """
                         @echo off
-                        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-                             --header "Content-Type: application/json" ^
-                             --data ^"${jsonPayload}^"
+                        
+             curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+             --header "Content-Type: application/json" ^
+             --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"GoogleSearchSelenide_Pipeline completed !!! PASSED\\nBranch: master. Browser: chrome.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/73/allure/\\"}"
+
                         """.stripIndent()
 
             // Write the batch file to the workspace
