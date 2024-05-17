@@ -163,16 +163,16 @@ def sendTelegramNotification(String slackEmoji) {
                 string(credentialsId: 'telegram_chatId', variable: 'TELEGRAM_CHAT_ID'),
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
-            def message = "<<$env.JOB_BASE_NAME>> completed !!! PASSED\nBranch: $task_branch. Browser: $browser_name.\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/${BUILD_NUMBER}/allure/"
-            def jsonPayload = "{\"chat_id\": \"${TELEGRAM_CHAT_ID}\", \"text\": \"${message.replace('\n', '\\n')}\"}"
+            def message = "<<$env.JOB_BASE_NAME>> completed !!! PASSED\nBranch: $task_branch. Browser: $browser_name.\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
+            def jsonPayload = "{\"chat_id\": \"${env.TELEGRAM_CHAT_ID}\", \"text\": \"${message.replace('\n', '\\n')}\"}"
 
-            def curlCommand = """
-                        curl --location "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" ^
+            writeFile file: 'sendTelegramMessage.bat', text: """@echo off
+                        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
                              --header "Content-Type: application/json" ^
                              --data "${jsonPayload}"
                         """
 
-            bat curlCommand
+            bat "sendTelegramMessage.bat"
         }
     }
 }
