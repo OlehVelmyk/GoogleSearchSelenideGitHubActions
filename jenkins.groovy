@@ -7,8 +7,8 @@ base_git_url = "https://github.com/OlehVelmyk/GoogleSearchSelenide.git"
 
 node {
     withEnv(["branch=${branch_cutted}", "base_url=${base_git_url}"]) {
-        withCredentials([string(credentialsId: 'telegram-token', variable: 'tg_token'),
-                         string(credentialsId: 'telegram_chatId', variable: 'tg_chatId')]) {
+//        withCredentials([string(credentialsId: 'telegram-token', variable: 'tg_token'),
+//                         string(credentialsId: 'telegram_chatId', variable: 'tg_chatId')]) {
             stage("Checkout Branch") {
                 if (!"$branch_cutted".contains("master")) {
                     try {
@@ -70,7 +70,6 @@ node {
 //        }
         }
     }
-}
 
 //def getTestStages(testTags) {
 //    def stages = [:]
@@ -166,11 +165,11 @@ def sendTelegramNotification(String slackEmoji) {
             // Construct the message
             def message = "<<$env.JOB_BASE_NAME>> completed !!! PASSED\nBranch: $task_branch. Browser: $browser_name.\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
 
-            // Escape double quotes and backslashes for JSON
-            def escapedMessage = message.replace('"', '\\"').replace('\n', '\\n')
+            // Prepare the JSON payload using JsonOutput to escape special characters
+            def jsonPayload = groovy.json.JsonOutput.toJson([chat_id: TELEGRAM_CHAT_ID, text: message])
 
-            // Prepare the JSON payload
-            def jsonPayload = """{"chat_id": "$TELEGRAM_CHAT_ID", "text": "${escapedMessage}"}"""
+            // Log the payload for debugging
+            echo "JSON Payload: ${jsonPayload}"
 
             // Write the batch file content with proper escaping and without direct interpolation
             def batchFileContent = """
@@ -182,6 +181,9 @@ def sendTelegramNotification(String slackEmoji) {
 
             // Write the batch file to the workspace
             writeFile file: 'sendTelegramMessage.bat', text: batchFileContent
+
+            // Log the batch file content for debugging
+            echo "Batch File Content: ${batchFileContent}"
 
             // Run the batch file
             bat 'sendTelegramMessage.bat'
