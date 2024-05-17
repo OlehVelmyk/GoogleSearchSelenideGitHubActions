@@ -153,11 +153,18 @@ def sendTelegramNotification(String slackEmoji) {
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     } else {
+//        bat """
+//        curl --location 'https://api.telegram.org/bot$tg_token/sendMessage' \
+//             --header 'Content-Type: application/json' \
+//             --data '{"chat_id": "$tg_chatId",
+//                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+//           """
+
         bat """
         curl --location 'https://api.telegram.org/bot$tg_token/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "$tg_chatId",
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+                      "text": "Test Jenkins!!!"}'
            """
     }
 }
