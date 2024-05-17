@@ -151,7 +151,7 @@ def sendTelegramNotification(String slackEmoji) {
            """
     } else {
         bat """
-        curl --location 'https://api.telegram.org/bot${tg_token}/sendMessage' \
+        curl --location 'https://api.telegram.org/bot${env.telegram-token}/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "${env.telegram_chatId}", 
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
