@@ -165,18 +165,19 @@ def sendTelegramNotification(String slackEmoji) {
         ]) {
             // Construct the message
             def message = "<<$env.JOB_BASE_NAME>> completed !!! PASSED\nBranch: $task_branch. Browser: $browser_name.\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
+
             // Escape double quotes and backslashes for JSON
             def escapedMessage = message.replace('"', '\\"').replace('\n', '\\n')
 
             // Prepare the JSON payload
-            def jsonPayload = '{"chat_id": "' + env.TELEGRAM_CHAT_ID + '", "text": "' + escapedMessage + '"}'
+            def jsonPayload = """{"chat_id": "$TELEGRAM_CHAT_ID", "text": "${escapedMessage}"}"""
 
             // Write the batch file content with proper escaping and without direct interpolation
             def batchFileContent = """
                         @echo off
                         curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
                              --header "Content-Type: application/json" ^
-                             --data ^"^${jsonPayload}^"
+                             --data ^"${jsonPayload}^"
                         """.stripIndent()
 
             // Write the batch file to the workspace
