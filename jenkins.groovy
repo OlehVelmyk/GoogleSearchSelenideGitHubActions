@@ -165,8 +165,12 @@ def sendTelegramNotification(String slackEmoji) {
             // Construct the message
             def message = "$env.JOB_BASE_NAME completed !!! PASSED\nBranch: $task_branch. Browser: $browser_name.\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"
 
+            echo "Message: $message"
+
             // Prepare the JSON payload using JsonOutput to escape special characters
             def jsonPayload = groovy.json.JsonOutput.toJson([chat_id: TELEGRAM_CHAT_ID, text: message])
+
+            echo "jsonPayload: $jsonPayload"
 
             // Write the batch file content with proper escaping and without direct interpolation
             def batchFileContent = """
