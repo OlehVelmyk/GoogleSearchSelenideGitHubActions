@@ -7,39 +7,41 @@ base_git_url = "https://github.com/OlehVelmyk/GoogleSearchSelenide.git"
 
 node {
     withEnv(["branch=${branch_cutted}", "base_url=${base_git_url}"]) {
-        stage("Checkout Branch") {
-            if (!"$branch_cutted".contains("master")) {
-                try {
-                    getProject("$base_git_url", "$branch_cutted")
-                } catch (err) {
-                    echo "Failed get branch $branch_cutted"
-                    throw ("${err}")
+        withCredentials([string(credentialsId: 'telegram-token', variable: 'tg_token'),
+                         string(credentialsId: 'telegram_chatId', variable: 'tg_chatId')]) {
+            stage("Checkout Branch") {
+                if (!"$branch_cutted".contains("master")) {
+                    try {
+                        getProject("$base_git_url", "$branch_cutted")
+                    } catch (err) {
+                        echo "Failed get branch $branch_cutted"
+                        throw ("${err}")
+                    }
+                } else {
+                    echo "Current branch is master"
+                    git "$base_git_url"
                 }
-            } else {
-                echo "Current branch is master"
-                git "$base_git_url"
             }
-        }
 
             try {
                 stage("Run tests in ${browser_name}") {
                     runTestWithTag(browser_name)
                 }
             } catch (err) {
-                    echo "Some failed tests ${browser_name}"
-                    throw ("${err}")
-                }
+                echo "Some failed tests ${browser_name}"
+                throw ("${err}")
+            }
             finally {
-                   stage ("Allure") {
-                       generateAllure()
-                   }
-                   stage ("Slack") {
-                       generateSlackNotification()
-                   }
-                   stage ("Telegram") {
-                       generateTelegramNotification()
-                   }
+                stage ("Allure") {
+                    generateAllure()
                 }
+                stage ("Slack") {
+                    generateSlackNotification()
+                }
+                stage ("Telegram") {
+                    generateTelegramNotification()
+                }
+            }
 
 
 //        try {
@@ -66,6 +68,7 @@ node {
 //                generateAllure()
 //            }
 //        }
+        }
     }
 }
 
@@ -156,9 +159,9 @@ def sendTelegramNotification(String slackEmoji) {
 //             --data '{"chat_id": "${env.telegram_chatId}",
 //                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
 //           """
-        withCredentials([string(credentialsId: 'telegram-token', variable: 'telegram_token')]) {
-            // After that is going your pipeline steps that require the secret text credential, for instance:
-            echo "VARIABLE=$telegram_token"
+//        withCredentials([string(credentialsId: 'telegram-token', variable: 'telegram_token')]) {
+//            // After that is going your pipeline steps that require the secret text credential, for instance:
+            echo "VARIABLE=$tg_token"
+            echo "VARIABLE=$tg_chatId"
         }
     }
-}
