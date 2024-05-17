@@ -6,12 +6,6 @@ base_git_url = "https://github.com/OlehVelmyk/GoogleSearchSelenide.git"
 
 
 node {
-    environment {
-        // Telegram configuration
-        tg_token = credentials('telegram-token')
-        chat_id = credentials('telegram_chatId')
-    }
-
     withEnv(["branch=${branch_cutted}", "base_url=${base_git_url}"]) {
         stage("Checkout Branch") {
             if (!"$branch_cutted".contains("master")) {
@@ -150,7 +144,7 @@ def generateTelegramNotification() {
 def sendTelegramNotification(String slackEmoji) {
     if (isUnix()) {
         sh """
-        curl --location 'https://api.telegram.org/bot${tg_token}/sendMessage' \
+        curl --location 'https://api.telegram.org/bot${env.telegram-token}/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "${chat_id}", 
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
@@ -159,7 +153,7 @@ def sendTelegramNotification(String slackEmoji) {
         bat """
         curl --location 'https://api.telegram.org/bot${tg_token}/sendMessage' \
              --header 'Content-Type: application/json' \
-             --data '{"chat_id": "${chat_id}", 
+             --data '{"chat_id": "${env.telegram_chatId}", 
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     }
