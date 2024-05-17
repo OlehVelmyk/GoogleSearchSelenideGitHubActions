@@ -137,9 +137,9 @@ def sendSlackNotification(String color, String slackEmoji) {
 
 def generateTelegramNotification() {
     if (currentBuild.result == "SUCCESS") {
-        sendTelegramNotification("\\u2705")
+        sendTelegramNotification("\u2705")
     } else {
-        sendTelegramNotification("\\uD83D\\uDCA1")
+        sendTelegramNotification("\uD83D\uDCA1")
     }
 }
 
