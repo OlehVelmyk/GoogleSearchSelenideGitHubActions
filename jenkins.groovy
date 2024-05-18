@@ -172,7 +172,7 @@ def sendTelegramNotification(String slackEmoji) {
 //            bat 'sendTelegramMessage.bat'
 
             // Define the file path within the workspace
-            def batchFilePath = "${env.WORKSPACE}/sendTelegramMessage.bat"
+            def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
 
             // Write the batch file to the workspace
             writeFile file: batchFilePath, text: batchFileContent
