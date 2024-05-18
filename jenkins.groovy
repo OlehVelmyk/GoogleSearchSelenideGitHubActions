@@ -158,12 +158,12 @@ def sendTelegramNotification(String slackEmoji) {
         ]) {
             // Write the batch file content with proper escaping and without direct interpolation
             def batchFileContent = """
-        @echo off 
+                @echo off
                        
-        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-        --header "Content-Type: application/json" ^
-        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '$env.JOB_BASE_NAME' completed !!! $currentBuild.result\\n Branch: $task_branch. Browser: $browser_name.\\n <a href=\\"http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
-    """.stripIndent()
+                curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+                --header "Content-Type: application/json" ^
+                --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '$env.JOB_BASE_NAME' completed !!! $currentBuild.result\\n Branch: $task_branch. Browser: $browser_name.\\n <a href=\\"http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
+            """.stripIndent()
 
             // Define the file path within the workspace
             def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
@@ -182,8 +182,14 @@ def sendTelegramNotification(String slackEmoji) {
                 error "Failed to create batch file."
             }
 
-            // Run the batch file
-            bat "\"${batchFilePath}\""
+            // Print the content of the batch file for debugging
+            def batchFile = readFile(batchFilePath)
+            echo "Batch file content:\n${batchFile}"
+
+            // Change to the workspace directory and execute the batch file
+            dir("${env.WORKSPACE}") {
+                bat 'sendTelegramMessage.bat'
+            }
         }
     }
 }
