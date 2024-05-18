@@ -189,7 +189,7 @@ def sendTelegramNotification(String slackEmoji) {
             }
 
             // Run the batch file
-            bat batchFilePath
+            bat "\"${batchFilePath}\""
         }
     }
 }
