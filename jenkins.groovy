@@ -165,11 +165,31 @@ def sendTelegramNotification(String slackEmoji) {
                 --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '$env.JOB_BASE_NAME' completed !!! $currentBuild.result\\n Branch: $task_branch. Browser: $browser_name.\\n <a href=\\"http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
             """.stripIndent()
 
+//            // Write the batch file to the workspace
+//            writeFile file: 'sendTelegramMessage.bat', text: batchFileContent
+//
+//            // Run the batch file
+//            bat 'sendTelegramMessage.bat'
+
+            // Define the file path within the workspace
+            def batchFilePath = "${env.WORKSPACE}/sendTelegramMessage.bat"
+
             // Write the batch file to the workspace
-            writeFile file: 'sendTelegramMessage.bat', text: batchFileContent
+            writeFile file: batchFilePath, text: batchFileContent
+
+            // Print the current workspace and batch file path for debugging
+            echo "Workspace: ${env.WORKSPACE}"
+            echo "Batch file path: ${batchFilePath}"
+
+            // Ensure the batch file is created successfully
+            if (fileExists(batchFilePath)) {
+                echo "Batch file created successfully."
+            } else {
+                error "Failed to create batch file."
+            }
 
             // Run the batch file
-            bat 'sendTelegramMessage.bat'
+            bat batchFilePath
         }
     }
 }
