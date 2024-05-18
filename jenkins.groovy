@@ -162,7 +162,7 @@ def sendTelegramNotification(String slackEmoji) {
                                                
              curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
              --header "Content-Type: application/json" ^
-             --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"${slackEmoji} <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/\\"}"
+             --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"%xE2%x9C%x85 <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/\\"}"
              
                         """.stripIndent()
 
