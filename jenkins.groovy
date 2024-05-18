@@ -158,13 +158,12 @@ def sendTelegramNotification(String slackEmoji) {
         ]) {
             // Write the batch file content with proper escaping and without direct interpolation
             def batchFileContent = """
-                        @echo off 
+                @echo off 
                                                
-             curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-             --header "Content-Type: application/json" ^
-             --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '$env.JOB_BASE_NAME' completed !!! $currentBuild.result\\n Branch: $task_branch. Browser: $browser_name.\\n Report is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/\\"}"
-             
-                        """.stripIndent()
+                curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+                --header "Content-Type: application/json" ^
+                --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '$env.JOB_BASE_NAME' completed !!! $currentBuild.result\\n Branch: $task_branch. Browser: $browser_name.\\n <a href=\\"http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
+            """.stripIndent()
 
             // Write the batch file to the workspace
             writeFile file: 'sendTelegramMessage.bat', text: batchFileContent
