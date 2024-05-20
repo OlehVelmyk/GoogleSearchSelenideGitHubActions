@@ -188,17 +188,17 @@ if %ERRORLEVEL% neq 0 (
 //echo BRANCH_NAME=%BRANCH_NAME%
 //echo BROWSER_NAME=%BROWSER_NAME%
 
-echo.
-echo Executing simplified curl command for debugging...
-curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
---header "Content-Type: application/json" ^
---data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Test message\\"}"
-
-echo.
-echo Executing full curl command with simplified message...
-curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
---header "Content-Type: application/json" ^
---data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Job '%JOB_NAME%' completed with status %BUILD_RESULT%.\\",\\"parse_mode\\":\\"HTML\\"}"
+//echo.
+//echo Executing simplified curl command for debugging...
+//curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+//--header "Content-Type: application/json" ^
+//--data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Test message\\"}"
+//
+//echo.
+//echo Executing full curl command with simplified message...
+//curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+//--header "Content-Type: application/json" ^
+//--data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Job '%JOB_NAME%' completed with status %BUILD_RESULT%.\\",\\"parse_mode\\":\\"HTML\\"}"
 
 echo.
 echo Preparing full message for curl command...
