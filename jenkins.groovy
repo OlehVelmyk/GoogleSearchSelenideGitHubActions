@@ -178,6 +178,14 @@ def sendTelegramNotification(String slackEmoji) {
         --header "Content-Type: application/json" ^
         --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href=\\"%JOB_URL%%BUILD_NUMBER%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
 
+        echo.
+        echo Executing simplified curl command for debugging...
+        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+        --header "Content-Type: application/json" ^
+        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Test message\\"}"
+
+        echo.
+        echo Executing full curl command...
         curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
         --header "Content-Type: application/json" ^
         --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href=\\"%JOB_URL%%BUILD_NUMBER%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
