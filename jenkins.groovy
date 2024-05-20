@@ -202,7 +202,7 @@ if %ERRORLEVEL% neq 0 (
 
 echo.
 echo Preparing full message for curl command...
-set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href="%JOB_URL%%BUILD_NUMBER%/allure/"></a>\\",\\"parse_mode\\":\\"HTML\\"}
+set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here: %JOB_URL%%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
 echo Full message: %FULL_MESSAGE%
 
