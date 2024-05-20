@@ -156,7 +156,6 @@ def sendTelegramNotification(String slackEmoji) {
                 string(credentialsId: 'telegram_chatId', variable: 'TELEGRAM_CHAT_ID'),
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
-            // Write the batch file content with proper escaping and without direct interpolation
             def batchFileContent = """
         @echo off
 
@@ -170,10 +169,10 @@ def sendTelegramNotification(String slackEmoji) {
         set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
         set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
         set JOB_NAME=${env.JOB_NAME}
-        set BUILD_RESULT=${currentBuild.result}
+        set BUILD_RESULT=${currentBuild.result ?: 'SUCCESS'}
         set BUILD_NUMBER=${env.BUILD_NUMBER}
         set JOB_URL=${env.JOB_URL}
-        set BRANCH_NAME=${env.BRANCH_NAME}
+        set BRANCH_NAME=${env.BRANCH_NAME ?: 'null'}
         set BROWSER_NAME=${env.BROWSER_NAME}
 
         echo.
@@ -209,44 +208,35 @@ def sendTelegramNotification(String slackEmoji) {
         echo Executing full curl command with full message...
         curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
         --header "Content-Type: application/json" ^
-        --data "%FULL_MESSAGE%"
+        --data ^"%FULL_MESSAGE%^"
 
     """.stripIndent()
 
-            // Define the file path within the workspace
             def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
 
-            // Write the batch file to the workspace
             writeFile file: batchFilePath, text: batchFileContent
 
-            // Print the current workspace and batch file path for debugging
             echo "Workspace: ${env.WORKSPACE}"
             echo "Batch file path: ${batchFilePath}"
 
-            // Ensure the batch file is created successfully
             if (fileExists(batchFilePath)) {
                 echo "Batch file created successfully."
             } else {
                 error "Failed to create batch file."
             }
 
-            // Print the content of the batch file for debugging
             def batchFile = readFile(batchFilePath)
             echo "Batch file content:\n${batchFile}"
 
-            // Change to the workspace directory and execute the batch file
             dir("${env.WORKSPACE}") {
-                // Debugging: Check if the batch file exists before execution
                 if (fileExists('sendTelegramMessage.bat')) {
                     echo "Batch file exists in workspace directory."
                 } else {
                     error "Batch file does not exist in workspace directory."
                 }
 
-                // Debugging: Print the current directory
                 bat 'echo Current directory: %cd%'
 
-                // Run the batch file
                 bat 'sendTelegramMessage.bat'
             }
         }
