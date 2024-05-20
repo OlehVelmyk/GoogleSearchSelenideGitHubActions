@@ -174,9 +174,14 @@ def sendTelegramNotification(String slackEmoji) {
         set BUILD_NUMBER=${env.BUILD_NUMBER}
         set JOB_URL=${env.JOB_URL}
         
-        echo curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-        --header "Content-Type: application/json" ^
-        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href=\\"%JOB_URL%%BUILD_NUMBER%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
+        echo.
+        echo Environment variables:
+        echo TELEGRAM_CHAT_ID=%TELEGRAM_CHAT_ID%
+        echo TELEGRAM_TOKEN=%TELEGRAM_TOKEN%
+        echo JOB_NAME=%JOB_NAME%
+        echo BUILD_RESULT=%BUILD_RESULT%
+        echo BUILD_NUMBER=%BUILD_NUMBER%
+        echo JOB_URL=%JOB_URL%
 
         echo.
         echo Executing simplified curl command for debugging...
@@ -185,7 +190,13 @@ def sendTelegramNotification(String slackEmoji) {
         --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Test message\\"}"
 
         echo.
-        echo Executing full curl command...
+        echo Executing full curl command with simplified message...
+        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+        --header "Content-Type: application/json" ^
+        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Job '%JOB_NAME%' completed with status %BUILD_RESULT%.\\",\\"parse_mode\\":\\"HTML\\"}"
+        
+        echo.
+        echo Executing full curl command with full message...
         curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
         --header "Content-Type: application/json" ^
         --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href=\\"%JOB_URL%%BUILD_NUMBER%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
