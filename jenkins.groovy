@@ -163,17 +163,24 @@ def sendTelegramNotification(String slackEmoji) {
         echo Checking if curl is installed and accessible...
         curl --version
         if %ERRORLEVEL% neq 0 (
-            echo "curl is not installed or not in the PATH"
+            echo curl is not installed or not in the PATH
             exit /b 1
         )
 
+        set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+        set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+        set JOB_NAME=${env.JOB_NAME}
+        set BUILD_RESULT=${currentBuild.result}
+        set BUILD_NUMBER=${env.BUILD_NUMBER}
+        set JOB_URL=${env.JOB_URL}
+        
         echo curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
         --header "Content-Type: application/json" ^
-        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" 'GoogleSearchSelenide_Pipeline' completed !!! %currentBuild.result%\\n Branch: %task_branch%. Browser: %browser_name%.\\n <a href=\\"http://localhost:8090/job/GoogleSearchSelenide_Pipeline/%currentBuild.number%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
+        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href=\\"%JOB_URL%%BUILD_NUMBER%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
 
         curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
         --header "Content-Type: application/json" ^
-        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" 'GoogleSearchSelenide_Pipeline' completed !!! %currentBuild.result%\\n Branch: %task_branch%. Browser: %browser_name%.\\n <a href=\\"http://localhost:8090/job/GoogleSearchSelenide_Pipeline/%currentBuild.number%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
+        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href=\\"%JOB_URL%%BUILD_NUMBER%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
     """.stripIndent()
 
             // Define the file path within the workspace
