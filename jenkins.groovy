@@ -161,12 +161,12 @@ def sendTelegramNotification(String slackEmoji) {
             def batchFileContent = """
                         @echo off
 
-echo Checking if curl is installed and accessible...
-curl --version
-if %ERRORLEVEL% neq 0 (
-    echo curl is not installed or not in the PATH
-    exit /b 1
-)
+//echo Checking if curl is installed and accessible...
+//curl --version
+//if %ERRORLEVEL% neq 0 (
+//    echo curl is not installed or not in the PATH
+//    exit /b 1
+//)
 
                         set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
                         set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
