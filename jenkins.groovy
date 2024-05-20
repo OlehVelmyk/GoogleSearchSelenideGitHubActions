@@ -152,8 +152,12 @@ def sendTelegramNotification(String slackEmoji) {
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
            """
     } else {
-        // Write the batch file content with proper escaping and without direct interpolation
-        def batchFileContent = """
+        withCredentials([
+                string(credentialsId: 'telegram_chatId', variable: 'TELEGRAM_CHAT_ID'),
+                string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
+        ]) {
+            // Write the batch file content with proper escaping and without direct interpolation
+            def batchFileContent = """
         @echo off
 
         echo Checking if curl is installed and accessible...
@@ -172,41 +176,42 @@ def sendTelegramNotification(String slackEmoji) {
         --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" 'GoogleSearchSelenide_Pipeline' completed !!! %currentBuild.result%\\n Branch: %task_branch%. Browser: %browser_name%.\\n <a href=\\"http://localhost:8090/job/GoogleSearchSelenide_Pipeline/%currentBuild.number%/allure/\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}"
     """.stripIndent()
 
-        // Define the file path within the workspace
-        def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
+            // Define the file path within the workspace
+            def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
 
-        // Write the batch file to the workspace
-        writeFile file: batchFilePath, text: batchFileContent
+            // Write the batch file to the workspace
+            writeFile file: batchFilePath, text: batchFileContent
 
-        // Print the current workspace and batch file path for debugging
-        echo "Workspace: ${env.WORKSPACE}"
-        echo "Batch file path: ${batchFilePath}"
+            // Print the current workspace and batch file path for debugging
+            echo "Workspace: ${env.WORKSPACE}"
+            echo "Batch file path: ${batchFilePath}"
 
-        // Ensure the batch file is created successfully
-        if (fileExists(batchFilePath)) {
-            echo "Batch file created successfully."
-        } else {
-            error "Failed to create batch file."
-        }
-
-        // Print the content of the batch file for debugging
-        def batchFile = readFile(batchFilePath)
-        echo "Batch file content:\n${batchFile}"
-
-        // Change to the workspace directory and execute the batch file
-        dir("${env.WORKSPACE}") {
-            // Debugging: Check if the batch file exists before execution
-            if (fileExists('sendTelegramMessage.bat')) {
-                echo "Batch file exists in workspace directory."
+            // Ensure the batch file is created successfully
+            if (fileExists(batchFilePath)) {
+                echo "Batch file created successfully."
             } else {
-                error "Batch file does not exist in workspace directory."
+                error "Failed to create batch file."
             }
 
-            // Debugging: Print the current directory
-            bat 'echo Current directory: %cd%'
+            // Print the content of the batch file for debugging
+            def batchFile = readFile(batchFilePath)
+            echo "Batch file content:\n${batchFile}"
 
-            // Run the batch file
-            bat 'sendTelegramMessage.bat'
+            // Change to the workspace directory and execute the batch file
+            dir("${env.WORKSPACE}") {
+                // Debugging: Check if the batch file exists before execution
+                if (fileExists('sendTelegramMessage.bat')) {
+                    echo "Batch file exists in workspace directory."
+                } else {
+                    error "Batch file does not exist in workspace directory."
+                }
+
+                // Debugging: Print the current directory
+                bat 'echo Current directory: %cd%'
+
+                // Run the batch file
+                bat 'sendTelegramMessage.bat'
+            }
         }
     }
 }
