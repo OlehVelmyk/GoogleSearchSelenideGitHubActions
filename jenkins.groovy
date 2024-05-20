@@ -217,26 +217,26 @@ curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
 
             writeFile file: batchFilePath, text: batchFileContent
 
-            echo "Workspace: ${env.WORKSPACE}"
-            echo "Batch file path: ${batchFilePath}"
-
-            if (fileExists(batchFilePath)) {
-                echo "Batch file created successfully."
-            } else {
-                error "Failed to create batch file."
-            }
+//            echo "Workspace: ${env.WORKSPACE}"
+//            echo "Batch file path: ${batchFilePath}"
+//
+//            if (fileExists(batchFilePath)) {
+//                echo "Batch file created successfully."
+//            } else {
+//                error "Failed to create batch file."
+//            }
 
             def batchFile = readFile(batchFilePath)
-            echo "Batch file content:\n${batchFile}"
+//            echo "Batch file content:\n${batchFile}"
 
-            dir("${env.WORKSPACE}") {
-                if (fileExists('sendTelegramMessage.bat')) {
-                    echo "Batch file exists in workspace directory."
-                } else {
-                    error "Batch file does not exist in workspace directory."
-                }
-
-                bat 'echo Current directory: %cd%'
+//            dir("${env.WORKSPACE}") {
+//                if (fileExists('sendTelegramMessage.bat')) {
+//                    echo "Batch file exists in workspace directory."
+//                } else {
+//                    error "Batch file does not exist in workspace directory."
+//                }
+//
+//                bat 'echo Current directory: %cd%'
 
                 bat 'sendTelegramMessage.bat'
             }
