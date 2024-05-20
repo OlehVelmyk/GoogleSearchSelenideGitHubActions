@@ -155,7 +155,7 @@ def sendTelegramNotification(String slackEmoji) {
         // Write the batch file content with proper escaping and without direct interpolation
         def batchFileContent = """
         @echo off
-        
+
         echo Checking if curl is installed and accessible...
         curl --version
         if %ERRORLEVEL% neq 0 (
@@ -195,7 +195,18 @@ def sendTelegramNotification(String slackEmoji) {
 
         // Change to the workspace directory and execute the batch file
         dir("${env.WORKSPACE}") {
+            // Debugging: Check if the batch file exists before execution
+            if (fileExists('sendTelegramMessage.bat')) {
+                echo "Batch file exists in workspace directory."
+            } else {
+                error "Batch file does not exist in workspace directory."
+            }
+
+            // Debugging: Print the current directory
+            bat 'echo Current directory: %cd%'
+
+            // Run the batch file
             bat 'sendTelegramMessage.bat'
         }
-        }
     }
+}
