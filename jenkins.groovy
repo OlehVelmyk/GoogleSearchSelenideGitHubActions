@@ -168,14 +168,12 @@ def sendTelegramNotification(String slackEmoji) {
                         set BRANCH_NAME=${task_branch}
                         set BROWSER_NAME=${env.BROWSER_NAME}
 
+            set FULL_MESSAGE={\\"chat_id\\":\\"%$TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%$env.JOB_BASE_NAME%' completed !!! %$currentBuild.result%\\n Branch: %$task_branch%. Browser: %$browser_name%.\\n Report is here:\\n %$env.JOB_URL%%$env.BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
-
-set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here:\\n %JOB_URL%%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
-
-curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
---header "Content-Type: application/json" ^
---data ^"%FULL_MESSAGE%^"
-                    """.stripIndent()
+           curl --location "https://api.telegram.org/bot%$TELEGRAM_TOKEN%/sendMessage" ^
+                --header "Content-Type: application/json" ^
+                --data ^"%FULL_MESSAGE%^"
+           """.stripIndent()
 
             def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
 
