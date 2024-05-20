@@ -157,60 +157,60 @@ def sendTelegramNotification(String slackEmoji) {
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
             def batchFileContent = """
-        @echo off
+                        @echo off
 
-        echo Checking if curl is installed and accessible...
-        curl --version
-        if %ERRORLEVEL% neq 0 (
-            echo curl is not installed or not in the PATH
-            exit /b 1
-        )
+                        echo Checking if curl is installed and accessible...
+                        curl --version
+                        if %ERRORLEVEL% neq 0 (
+                            echo curl is not installed or not in the PATH
+                            exit /b 1
+                        )
 
-        set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
-        set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
-        set JOB_NAME=${env.JOB_NAME}
-        set BUILD_RESULT=${currentBuild.result ?: 'SUCCESS'}
-        set BUILD_NUMBER=${env.BUILD_NUMBER}
-        set JOB_URL=${env.JOB_URL}
-        set BRANCH_NAME=${env.BRANCH_NAME ?: 'null'}
-        set BROWSER_NAME=${env.BROWSER_NAME}
+                        set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+                        set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+                        set JOB_NAME=${env.JOB_NAME}
+                        set BUILD_RESULT=${currentBuild.result ?: 'SUCCESS'}
+                        set BUILD_NUMBER=${env.BUILD_NUMBER}
+                        set JOB_URL=${env.JOB_URL}
+                        set BRANCH_NAME=${env.BRANCH_NAME ?: 'null'}
+                        set BROWSER_NAME=${env.BROWSER_NAME}
 
-        echo.
-        echo Environment variables:
-        echo TELEGRAM_CHAT_ID=%TELEGRAM_CHAT_ID%
-        echo TELEGRAM_TOKEN=%TELEGRAM_TOKEN%
-        echo JOB_NAME=%JOB_NAME%
-        echo BUILD_RESULT=%BUILD_RESULT%
-        echo BUILD_NUMBER=%BUILD_NUMBER%
-        echo JOB_URL=%JOB_URL%
-        echo BRANCH_NAME=%BRANCH_NAME%
-        echo BROWSER_NAME=%BROWSER_NAME%
+                        echo.
+                        echo Environment variables:
+                        echo TELEGRAM_CHAT_ID=%TELEGRAM_CHAT_ID%
+                        echo TELEGRAM_TOKEN=%TELEGRAM_TOKEN%
+                        echo JOB_NAME=%JOB_NAME%
+                        echo BUILD_RESULT=%BUILD_RESULT%
+                        echo BUILD_NUMBER=%BUILD_NUMBER%
+                        echo JOB_URL=%JOB_URL%
+                        echo BRANCH_NAME=%BRANCH_NAME%
+                        echo BROWSER_NAME=%BROWSER_NAME%
 
-        echo.
-        echo Executing simplified curl command for debugging...
-        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-        --header "Content-Type: application/json" ^
-        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Test message\\"}"
+                        echo.
+                        echo Executing simplified curl command for debugging...
+                        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+                        --header "Content-Type: application/json" ^
+                        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Test message\\"}"
 
-        echo.
-        echo Executing full curl command with simplified message...
-        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-        --header "Content-Type: application/json" ^
-        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Job '%JOB_NAME%' completed with status %BUILD_RESULT%.\",\\"parse_mode\\":\\"HTML\\"}"
+                        echo.
+                        echo Executing full curl command with simplified message...
+                        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+                        --header "Content-Type: application/json" ^
+                        --data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Job '%JOB_NAME%' completed with status %BUILD_RESULT%.\",\\"parse_mode\\":\\"HTML\\"}"
 
-        echo.
-        echo Preparing full message for curl command...
-        set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\\\n <a href=\\\\\\"%JOB_URL%%BUILD_NUMBER%/allure/\\\\\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}
+                        echo.
+                        echo Preparing full message for curl command...
+                        set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\\\n <a href=\\\\\\"%JOB_URL%%BUILD_NUMBER%/allure/\\\\\\">Report is here</a>\\",\\"parse_mode\\":\\"HTML\\"}
 
-        echo Full message: %FULL_MESSAGE%
+                        echo Full message: %FULL_MESSAGE%
 
-        echo.
-        echo Executing full curl command with full message...
-        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-        --header "Content-Type: application/json" ^
-        --data ^"%FULL_MESSAGE%^"
+                        echo.
+                        echo Executing full curl command with full message...
+                        curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+                        --header "Content-Type: application/json" ^
+                        --data ^"%FULL_MESSAGE%^"
 
-    """.stripIndent()
+                    """.stripIndent()
 
             def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
 
