@@ -156,6 +156,8 @@ def sendTelegramNotification(String slackEmoji) {
                 string(credentialsId: 'telegram_chatId', variable: 'TELEGRAM_CHAT_ID'),
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
+            def branchName = env.BRANCH_NAME ?: 'main'
+
             def batchFileContent = """
                         @echo off
 
@@ -172,7 +174,7 @@ def sendTelegramNotification(String slackEmoji) {
                         set BUILD_RESULT=${currentBuild.result ?: 'SUCCESS'}
                         set BUILD_NUMBER=${env.BUILD_NUMBER}
                         set JOB_URL=${env.JOB_URL}
-                        set BRANCH_NAME=${env.BRANCH_NAME ?: 'null'}
+                        set BRANCH_NAME=${branchName}
                         set BROWSER_NAME=${env.BROWSER_NAME}
 
                         echo.
