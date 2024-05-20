@@ -174,7 +174,7 @@ if %ERRORLEVEL% neq 0 (
                         set BUILD_RESULT=${currentBuild.result ?: 'SUCCESS'}
                         set BUILD_NUMBER=${env.BUILD_NUMBER}
                         set JOB_URL=${env.JOB_URL}
-                        set BRANCH_NAME=${env.BRANCH_NAME}
+                        set BRANCH_NAME=${task_branch}
                         set BROWSER_NAME=${env.BROWSER_NAME}
 
 echo.
