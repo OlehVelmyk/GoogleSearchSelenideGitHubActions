@@ -157,23 +157,23 @@ def sendTelegramNotification(String slackEmoji) {
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
             def batchFileContent = """
-                        @echo off
+                @echo off
 
-                        set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
-                        set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
-                        set JOB_NAME=${env.JOB_NAME}
-                        set BUILD_RESULT=${currentBuild.result}
-                        set BUILD_NUMBER=${env.BUILD_NUMBER}
-                        set JOB_URL=${env.JOB_URL}
-                        set BRANCH_NAME=${task_branch}
-                        set BROWSER_NAME=${env.BROWSER_NAME}
+                set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+                set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+                set JOB_NAME=${env.JOB_NAME}
+                set BUILD_RESULT=${currentBuild.result ?: 'SUCCESS'}
+                set BUILD_NUMBER=${env.BUILD_NUMBER}
+                set JOB_URL=${env.JOB_URL}
+                set BRANCH_NAME=${task_branch}
+                set BROWSER_NAME=${env.BROWSER_NAME}
 
-            set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %$BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here:\\n %JOB_URL%%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
+                set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %$BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here:\\n %JOB_URL%%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
-           curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+            curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
                 --header "Content-Type: application/json" ^
                 --data ^"%FULL_MESSAGE%^"
-           """.stripIndent()
+            """.stripIndent()
 
             def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
 
