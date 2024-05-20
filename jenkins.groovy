@@ -156,17 +156,8 @@ def sendTelegramNotification(String slackEmoji) {
                 string(credentialsId: 'telegram_chatId', variable: 'TELEGRAM_CHAT_ID'),
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
-//            def branchName = env.BRANCH_NAME ?: 'main'
-
             def batchFileContent = """
                         @echo off
-
-//echo Checking if curl is installed and accessible...
-//curl --version
-//if %ERRORLEVEL% neq 0 (
-//    echo curl is not installed or not in the PATH
-//    exit /b 1
-//)
 
                         set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
                         set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
@@ -177,37 +168,10 @@ def sendTelegramNotification(String slackEmoji) {
                         set BRANCH_NAME=${task_branch}
                         set BROWSER_NAME=${env.BROWSER_NAME}
 
-//echo.
-//echo Environment variables:
-//echo TELEGRAM_CHAT_ID=%TELEGRAM_CHAT_ID%
-//echo TELEGRAM_TOKEN=%TELEGRAM_TOKEN%
-//echo JOB_NAME=%JOB_NAME%
-//echo BUILD_RESULT=%BUILD_RESULT%
-//echo BUILD_NUMBER=%BUILD_NUMBER%
-//echo JOB_URL=%JOB_URL%
-//echo BRANCH_NAME=%BRANCH_NAME%
-//echo BROWSER_NAME=%BROWSER_NAME%
 
-//echo.
-//echo Executing simplified curl command for debugging...
-//curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-//--header "Content-Type: application/json" ^
-//--data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Test message\\"}"
-//
-//echo.
-//echo Executing full curl command with simplified message...
-//curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-//--header "Content-Type: application/json" ^
-//--data "{\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"Job '%JOB_NAME%' completed with status %BUILD_RESULT%.\\",\\"parse_mode\\":\\"HTML\\"}"
 
-echo.
-echo Preparing full message for curl command...
 set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here:\\n %JOB_URL%%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
-echo Full message: %FULL_MESSAGE%
-
-echo.
-echo Executing full curl command with full message...
 curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
 --header "Content-Type: application/json" ^
 --data ^"%FULL_MESSAGE%^"
@@ -217,26 +181,7 @@ curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
 
             writeFile file: batchFilePath, text: batchFileContent
 
-//            echo "Workspace: ${env.WORKSPACE}"
-//            echo "Batch file path: ${batchFilePath}"
-//
-//            if (fileExists(batchFilePath)) {
-//                echo "Batch file created successfully."
-//            } else {
-//                error "Failed to create batch file."
-//            }
-
             def batchFile = readFile(batchFilePath)
-//            echo "Batch file content:\n${batchFile}"
-
-//            dir("${env.WORKSPACE}") {
-//                if (fileExists('sendTelegramMessage.bat')) {
-//                    echo "Batch file exists in workspace directory."
-//                } else {
-//                    error "Batch file does not exist in workspace directory."
-//                }
-//
-//                bat 'echo Current directory: %cd%'
 
                 bat 'sendTelegramMessage.bat'
             }
