@@ -177,16 +177,16 @@ if %ERRORLEVEL% neq 0 (
                         set BRANCH_NAME=${task_branch}
                         set BROWSER_NAME=${env.BROWSER_NAME}
 
-echo.
-echo Environment variables:
-echo TELEGRAM_CHAT_ID=%TELEGRAM_CHAT_ID%
-echo TELEGRAM_TOKEN=%TELEGRAM_TOKEN%
-echo JOB_NAME=%JOB_NAME%
-echo BUILD_RESULT=%BUILD_RESULT%
-echo BUILD_NUMBER=%BUILD_NUMBER%
-echo JOB_URL=%JOB_URL%
-echo BRANCH_NAME=%BRANCH_NAME%
-echo BROWSER_NAME=%BROWSER_NAME%
+//echo.
+//echo Environment variables:
+//echo TELEGRAM_CHAT_ID=%TELEGRAM_CHAT_ID%
+//echo TELEGRAM_TOKEN=%TELEGRAM_TOKEN%
+//echo JOB_NAME=%JOB_NAME%
+//echo BUILD_RESULT=%BUILD_RESULT%
+//echo BUILD_NUMBER=%BUILD_NUMBER%
+//echo JOB_URL=%JOB_URL%
+//echo BRANCH_NAME=%BRANCH_NAME%
+//echo BROWSER_NAME=%BROWSER_NAME%
 
 echo.
 echo Executing simplified curl command for debugging...
@@ -202,7 +202,7 @@ curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
 
 echo.
 echo Preparing full message for curl command...
-set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href=\\"%JOB_URL%%BUILD_NUMBER%/allure/\\"></a>\\",\\"parse_mode\\":\\"HTML\\"}
+set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n <a href=\\\\\\"%JOB_URL%%BUILD_NUMBER%/allure/\\\\\\"></a>\\",\\"parse_mode\\":\\"HTML\\"}
 
 echo Full message: %FULL_MESSAGE%
 
