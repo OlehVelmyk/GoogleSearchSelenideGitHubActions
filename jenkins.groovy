@@ -159,18 +159,18 @@ def sendTelegramNotification(String slackEmoji) {
             def batchFileContent = """
                         @echo off
 
-                        set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
-                        set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
-                        set JOB_NAME=${env.JOB_NAME}
-                        set BUILD_RESULT=${currentBuild.result ?: 'SUCCESS'}
-                        set BUILD_NUMBER=${env.BUILD_NUMBER}
-                        set JOB_URL=${env.JOB_URL}
-                        set BRANCH_NAME=${task_branch}
-                        set BROWSER_NAME=${env.BROWSER_NAME}
+//                        set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+//                        set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+//                        set JOB_NAME=${env.JOB_NAME}
+//                        set BUILD_RESULT=${currentBuild.result ?: 'SUCCESS'}
+//                        set BUILD_NUMBER=${env.BUILD_NUMBER}
+//                        set JOB_URL=${env.JOB_URL}
+//                        set BRANCH_NAME=${task_branch}
+//                        set BROWSER_NAME=${env.BROWSER_NAME}
 
-            set FULL_MESSAGE={\\"chat_id\\":\\"%$TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%$env.JOB_BASE_NAME%' completed !!! %$currentBuild.result%\\n Branch: %$task_branch%. Browser: %$browser_name%.\\n Report is here:\\n %$env.JOB_URL%%$env.BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
+            set FULL_MESSAGE={\\"chat_id\\":\\"%${TELEGRAM_CHAT_ID}%\\",\\"text\\":\\" '%$env.JOB_BASE_NAME%' completed !!! %$currentBuild.result%\\n Branch: %$task_branch%. Browser: %$browser_name%.\\n Report is here:\\n %$env.JOB_URL%%$env.BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
-           curl --location "https://api.telegram.org/bot%$TELEGRAM_TOKEN%/sendMessage" ^
+           curl --location "https://api.telegram.org/bot%${TELEGRAM_TOKEN}%/sendMessage" ^
                 --header "Content-Type: application/json" ^
                 --data ^"%FULL_MESSAGE%^"
            """.stripIndent()
