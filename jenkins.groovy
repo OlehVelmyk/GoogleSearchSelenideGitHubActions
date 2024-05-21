@@ -170,10 +170,12 @@ def sendTelegramNotification(String slackEmoji) {
 
                 set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here:\\n %JOB_URL%%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
-            curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-                --header "Content-Type: application/json" ^
-                --data ^"%FULL_MESSAGE%^"
+                curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
+                     --header "Content-Type: application/json" ^
+                     --data ^"%FULL_MESSAGE%^"
             """.stripIndent()
+
+            echo "JOB_URL: ${JOB_URL}"
 
             def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
 
