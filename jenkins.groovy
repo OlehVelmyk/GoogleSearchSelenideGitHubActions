@@ -138,7 +138,7 @@ def generateTelegramNotification() {
     if (currentBuild.result == "SUCCESS") {
         sendTelegramNotification("&#9989;")
     } else {
-        sendTelegramNotification("\\uD83D\\uDCA1")
+        sendTelegramNotification("&#128545;")
     }
 }
 
@@ -167,7 +167,7 @@ def sendTelegramNotification(String slackEmoji) {
                 set BRANCH_NAME=${task_branch}
                 set BROWSER_NAME=${env.BROWSER_NAME}
 
-                set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"%slackEmoji% '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here: http://172.25.160.1:8090/job/%JOB_NAME%/%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
+                set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"${slackEmoji} '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here: http://172.25.160.1:8090/job/%JOB_NAME%/%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
                 curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
                      --header "Content-Type: application/json" ^
