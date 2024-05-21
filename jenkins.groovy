@@ -149,7 +149,7 @@ def sendTelegramNotification(String slackEmoji) {
         curl --location 'https://api.telegram.org/bot$tg-token/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "$tg_chatId", 
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: http://localhost:8090/job/GoogleSearchSelenide_Pipeline/$currentBuild.number/allure/"}'
+                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: ${env.JOB_URL}$currentBuild.number/allure/"}'
            """
     } else {
         withCredentials([
@@ -168,14 +168,12 @@ def sendTelegramNotification(String slackEmoji) {
                 set BRANCH_NAME=${task_branch}
                 set BROWSER_NAME=${env.BROWSER_NAME}
 
-                set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here:\\n http://172.25.160.1:8090/job/%JOB_NAME%/%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
+                set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\" '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here: http://172.25.160.1:8090/job/%JOB_NAME%/%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
                 curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
                      --header "Content-Type: application/json" ^
                      --data ^"%FULL_MESSAGE%^"
             """.stripIndent()
-
-            echo "JOB_URL: ${JOB_URL}"
 
             def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
 
