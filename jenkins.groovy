@@ -146,9 +146,9 @@ def generateTelegramNotification() {
 def sendTelegramNotification(String slackEmoji) {
     if (isUnix()) {
         sh """
-        curl --location 'https://api.telegram.org/bot$tg-token/sendMessage' \
+        curl --location 'https://api.telegram.org/bot$telegram-token/sendMessage' \
              --header 'Content-Type: application/json' \
-             --data '{"chat_id": "$tg_chatId", 
+             --data '{"chat_id": "$telegram_chatId", 
                       "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: ${env.JOB_URL}$currentBuild.number/allure/"}'
            """
     } else {
