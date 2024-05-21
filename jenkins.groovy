@@ -134,7 +134,6 @@ def sendSlackNotification(String color, String slackEmoji) {
               tokenCredentialId: 'slack-token'
 }
 
-
 def generateTelegramNotification() {
     if (currentBuild.result == "SUCCESS") {
         sendTelegramNotification("\\u2705")
