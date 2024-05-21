@@ -179,7 +179,7 @@ def sendTelegramNotification(String slackEmoji) {
 
             writeFile file: batchFilePath, text: batchFileContent
 
-            def batchFile = readFile(batchFilePath)
+//            def batchFile = readFile(batchFilePath)
 
                 bat 'sendTelegramMessage.bat'
             }
