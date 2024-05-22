@@ -7,8 +7,6 @@ base_git_url = "https://github.com/OlehVelmyk/GoogleSearchSelenide.git"
 
 node {
     withEnv(["branch=${branch_cutted}", "base_url=${base_git_url}"]) {
-//        withCredentials([string(credentialsId: 'telegram-token', variable: 'tg_token'),
-//                         string(credentialsId: 'telegram_chatId', variable: 'tg_chatId')]) {
             stage("Checkout Branch") {
                 if (!"$branch_cutted".contains("master")) {
                     try {
@@ -42,7 +40,6 @@ node {
                     generateTelegramNotification()
                 }
             }
-
 
 //        try {
 //            parallel getTestStages(["apiTests", "uiTests"])
