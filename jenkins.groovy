@@ -148,7 +148,7 @@ def sendTelegramNotification(String slackEmoji) {
         curl --location 'https://api.telegram.org/bot$telegram-token/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "$telegram_chatId", 
-                      "text": " <<$env.JOB_BASE_NAME>> completed !!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: ${env.JOB_URL}$currentBuild.number/allure/"}'
+                      "text": " <<$env.JOB_BASE_NAME>> completed!!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: ${env.JOB_URL}$currentBuild.number/allure/"}'
            """
     } else {
         withCredentials([
@@ -156,22 +156,23 @@ def sendTelegramNotification(String slackEmoji) {
                 string(credentialsId: 'telegram-token', variable: 'TELEGRAM_TOKEN')
         ]) {
             def batchFileContent = """
-                @echo off
+              @echo off
 
-                set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
-                set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
-                set JOB_NAME=${env.JOB_NAME}
-                set BUILD_RESULT=${currentBuild.result}
-                set BUILD_NUMBER=${env.BUILD_NUMBER}
-//                set JOB_URL=${env.JOB_URL}
-                set BRANCH_NAME=${task_branch}
-                set BROWSER_NAME=${env.BROWSER_NAME}
+//              set TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+//              set TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+//              set JOB_NAME=${env.JOB_NAME}
+//              set BUILD_RESULT=${currentBuild.result}
+//              set BUILD_NUMBER=${env.BUILD_NUMBER}
+//              set JOB_URL=${env.JOB_URL}
+//              set BRANCH_NAME=${task_branch}
+//              set BROWSER_NAME=${env.BROWSER_NAME}
 
-                set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"${slackEmoji} '%JOB_NAME%' completed !!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here: http://172.25.160.1:8090/job/%JOB_NAME%/%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
+//              set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"${slackEmoji} '%JOB_NAME%' completed!!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here: http://172.25.160.1:8090/job/%JOB_NAME%/%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
+              set FULL_MESSAGE={\\"chat_id\\":\\"${TELEGRAM_CHAT_ID}\\",\\"text\\":\\"${slackEmoji} '${env.JOB_NAME}' completed!!! ${currentBuild.result}\\n Branch: ${task_branch}. Browser: ${env.BROWSER_NAME}.\\n Report is here: http://172.25.160.1:8090/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
-                curl --location "https://api.telegram.org/bot%TELEGRAM_TOKEN%/sendMessage" ^
-                     --header "Content-Type: application/json" ^
-                     --data ^"%FULL_MESSAGE%^"
+              curl --location "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" ^
+                   --header "Content-Type: application/json" ^
+                   --data ^"%FULL_MESSAGE%^"
             """.stripIndent()
 
             def batchFilePath = "${env.WORKSPACE}\\sendTelegramMessage.bat"
@@ -180,7 +181,7 @@ def sendTelegramNotification(String slackEmoji) {
 
 //            def batchFile = readFile(batchFilePath)
 
-                bat 'sendTelegramMessage.bat'
+              bat 'sendTelegramMessage.bat'
             }
         }
     }
