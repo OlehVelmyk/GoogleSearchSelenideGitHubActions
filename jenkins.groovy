@@ -128,7 +128,7 @@ def sendSlackNotification(String color, String slackEmoji) {
     slackSend botUser: true,
               channel: 'test_notifications',
               color: color,
-              message: "${slackEmoji} <<$env.JOB_BASE_NAME>> completed!!! $currentBuild.result \r\n" +
+              message: "${slackEmoji} <<$env.JOB_NAME>> completed!!! $currentBuild.result \r\n" +
                        "Branch: $task_branch. Browser: $browser_name. \r\n" +
                        "Report is here: ${env.JOB_URL}$currentBuild.number/allure/",
               tokenCredentialId: 'slack-token'
@@ -148,7 +148,7 @@ def sendTelegramNotification(String slackEmoji) {
         curl --location 'https://api.telegram.org/bot$telegram-token/sendMessage' \
              --header 'Content-Type: application/json' \
              --data '{"chat_id": "$telegram_chatId", 
-                      "text": " <<$env.JOB_BASE_NAME>> completed!!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: ${env.JOB_URL}$currentBuild.number/allure/"}'
+                      "text": " <<$env.JOB_NAME>> completed!!! $currentBuild.result\\nBranch: $task_branch. Browser: $browser_name.\\nReport is here: ${env.JOB_URL}$currentBuild.number/allure/"}'
            """
     } else {
         withCredentials([
