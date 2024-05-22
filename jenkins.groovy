@@ -167,7 +167,7 @@ def sendTelegramNotification(String slackEmoji) {
               set BRANCH_NAME=${task_branch}
               set BROWSER_NAME=${env.BROWSER_NAME}
 
-              set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"'%JOB_NAME%' completed!!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here: http://172.25.160.1:8090/job/%JOB_NAME%/%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
+              set FULL_MESSAGE={\\"chat_id\\":\\"%TELEGRAM_CHAT_ID%\\",\\"text\\":\\"&#9989; '%JOB_NAME%' completed!!! %BUILD_RESULT%\\n Branch: %BRANCH_NAME%. Browser: %BROWSER_NAME%.\\n Report is here: http://172.25.160.1:8090/job/%JOB_NAME%/%BUILD_NUMBER%/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 //              set FULL_MESSAGE={\\"chat_id\\":\\"$TELEGRAM_CHAT_ID\\",\\"text\\":\\"${slackEmoji} '$env.JOB_NAME' completed!!! $currentBuild.result\\n Branch: $task_branch. Browser: $env.BROWSER_NAME.\\n Report is here: http://172.25.160.1:8090/job/$env.JOB_NAME/$env.BUILD_NUMBER/allure/\\",\\"parse_mode\\":\\"HTML\\"}
 
               curl --location "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" ^
